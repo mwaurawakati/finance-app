@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		17D7BEBF6E37C8F8DDDC3931 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 51ECA8805DBA4D4D48F75666 /* assets */; };
+		278095D0A528720DD9023CD3 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = C81CCD0557C15EB8BDE3E4FA /* main.mm */; };
+		3B4C5091D361EFBBAFA435C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD44A87B697CC371A0C3B160 /* LaunchScreen.storyboard */; };
+		43144C6B10E75A3E05BD2D8C /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06AA0D2C6A58E5BD7E25307B /* Metal.framework */; };
+		76C56175E5EF083D54E365A4 /* libapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4512B02956F9295EB219A4E6 /* libapp.a */; };
+		7BB7608322FAAC68F3AA7E75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6D544A34732426EA3ABAABE /* Assets.xcassets */; };
+		8A99C27A5CA8B147151635E9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97142F7EA3D55C12C6CC0CF9 /* WebKit.framework */; };
+		9C7D58AF58038E631D3232DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8C601E098D2FA8DB8247EB5 /* QuartzCore.framework */; };
+		9E4CA86D37A424EE9A419AC7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 515E58A8222AF584E42128DC /* UIKit.framework */; };
+		B64BD6DE9CDC13FEB4BF5F5E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFCFFB347D5A6918E9ED9CD1 /* CoreGraphics.framework */; };
+		D983148BC6F928F6352F43E3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7EC3CC96A9A98DDB02EF9F /* Security.framework */; };
+		FA896320CA4A31FC84BEFCEB /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AA9076449BFB831E3FAE61E /* MetalKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		054645D55162D022BD78EA97 /* finance-app_iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "finance-app_iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		06AA0D2C6A58E5BD7E25307B /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		1AA9076449BFB831E3FAE61E /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		29754CC02BBC8C9DB8A98AD2 /* lib.rs */ = {isa = PBXFileReference; path = lib.rs; sourceTree = "<group>"; };
+		2E7EC3CC96A9A98DDB02EF9F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4512B02956F9295EB219A4E6 /* libapp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libapp.a; sourceTree = "<group>"; };
+		515E58A8222AF584E42128DC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		51ECA8805DBA4D4D48F75666 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = SOURCE_ROOT; };
+		5EE838C3EAC7062ED826E796 /* bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bindings.h; sourceTree = "<group>"; };
+		606B9F173946D6A03ED87CAC /* finance-app_iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "finance-app_iOS.entitlements"; sourceTree = "<group>"; };
+		64700E975FEA7B76F7121371 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		97142F7EA3D55C12C6CC0CF9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		A6D544A34732426EA3ABAABE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A8C601E098D2FA8DB8247EB5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C2ED74B54234C091AD056C80 /* main.rs */ = {isa = PBXFileReference; path = main.rs; sourceTree = "<group>"; };
+		C81CCD0557C15EB8BDE3E4FA /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		CFCFFB347D5A6918E9ED9CD1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		DD44A87B697CC371A0C3B160 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00CDE776ED13463154FC4A70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76C56175E5EF083D54E365A4 /* libapp.a in Frameworks */,
+				B64BD6DE9CDC13FEB4BF5F5E /* CoreGraphics.framework in Frameworks */,
+				43144C6B10E75A3E05BD2D8C /* Metal.framework in Frameworks */,
+				FA896320CA4A31FC84BEFCEB /* MetalKit.framework in Frameworks */,
+				9C7D58AF58038E631D3232DB /* QuartzCore.framework in Frameworks */,
+				D983148BC6F928F6352F43E3 /* Security.framework in Frameworks */,
+				9E4CA86D37A424EE9A419AC7 /* UIKit.framework in Frameworks */,
+				8A99C27A5CA8B147151635E9 /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		221717E8A64D8ADD5EEE241F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CFCFFB347D5A6918E9ED9CD1 /* CoreGraphics.framework */,
+				4512B02956F9295EB219A4E6 /* libapp.a */,
+				06AA0D2C6A58E5BD7E25307B /* Metal.framework */,
+				1AA9076449BFB831E3FAE61E /* MetalKit.framework */,
+				A8C601E098D2FA8DB8247EB5 /* QuartzCore.framework */,
+				2E7EC3CC96A9A98DDB02EF9F /* Security.framework */,
+				515E58A8222AF584E42128DC /* UIKit.framework */,
+				97142F7EA3D55C12C6CC0CF9 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8AA961D63BD8CF6455FD1BD9 /* finance-app */ = {
+			isa = PBXGroup;
+			children = (
+				C81CCD0557C15EB8BDE3E4FA /* main.mm */,
+				8D379CC265FDDA052585F32A /* bindings */,
+			);
+			path = "finance-app";
+			sourceTree = "<group>";
+		};
+		8D379CC265FDDA052585F32A /* bindings */ = {
+			isa = PBXGroup;
+			children = (
+				5EE838C3EAC7062ED826E796 /* bindings.h */,
+			);
+			path = bindings;
+			sourceTree = "<group>";
+		};
+		A681B9677DBC5D00595FB26D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				29754CC02BBC8C9DB8A98AD2 /* lib.rs */,
+				C2ED74B54234C091AD056C80 /* main.rs */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
+		CDB8732F6BEEBC51B323F269 /* finance-app_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				606B9F173946D6A03ED87CAC /* finance-app_iOS.entitlements */,
+				64700E975FEA7B76F7121371 /* Info.plist */,
+			);
+			path = "finance-app_iOS";
+			sourceTree = "<group>";
+		};
+		CF6FAE1A6206D36C496822EE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				054645D55162D022BD78EA97 /* finance-app_iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D5FCB562575197F0ACCFAF47 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				8AA961D63BD8CF6455FD1BD9 /* finance-app */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		E037AC8E0183AEF2AFA832DA /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Externals;
+			sourceTree = "<group>";
+		};
+		FC0BFAD3BB13DFF5922CDCD0 = {
+			isa = PBXGroup;
+			children = (
+				51ECA8805DBA4D4D48F75666 /* assets */,
+				A6D544A34732426EA3ABAABE /* Assets.xcassets */,
+				DD44A87B697CC371A0C3B160 /* LaunchScreen.storyboard */,
+				E037AC8E0183AEF2AFA832DA /* Externals */,
+				CDB8732F6BEEBC51B323F269 /* finance-app_iOS */,
+				D5FCB562575197F0ACCFAF47 /* Sources */,
+				A681B9677DBC5D00595FB26D /* src */,
+				221717E8A64D8ADD5EEE241F /* Frameworks */,
+				CF6FAE1A6206D36C496822EE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3ECEC0AD86BB432C1F8419F9 /* finance-app_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75722839CD2070DD45771C4E /* Build configuration list for PBXNativeTarget "finance-app_iOS" */;
+			buildPhases = (
+				F6F7E9BD31EBD807A4DECCEC /* Build Rust Code */,
+				FB10F2B7F738C0233F4D9919 /* Sources */,
+				ABB09BEFC56165F9155EC1EF /* Resources */,
+				00CDE776ED13463154FC4A70 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "finance-app_iOS";
+			productName = "finance-app_iOS";
+			productReference = 054645D55162D022BD78EA97 /* finance-app_iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DC25F9AE495D8FA4BED463A3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					3ECEC0AD86BB432C1F8419F9 = {
+						DevelopmentTeam = U8JHH9PY48;
+					};
+				};
+			};
+			buildConfigurationList = C3EBD9A5E1CC3C297296E915 /* Build configuration list for PBXProject "finance-app" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FC0BFAD3BB13DFF5922CDCD0;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3ECEC0AD86BB432C1F8419F9 /* finance-app_iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABB09BEFC56165F9155EC1EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7BB7608322FAAC68F3AA7E75 /* Assets.xcassets in Resources */,
+				3B4C5091D361EFBBAFA435C2 /* LaunchScreen.storyboard in Resources */,
+				17D7BEBF6E37C8F8DDDC3931 /* assets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F6F7E9BD31EBD807A4DECCEC /* Build Rust Code */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Build Rust Code";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Externals/x86_64/${CONFIGURATION}/libapp.a",
+				"$(SRCROOT)/Externals/arm64/${CONFIGURATION}/libapp.a",
+				"$(SRCROOT)/Externals/arm64-sim/${CONFIGURATION}/libapp.a",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cargo tauri ios xcode-script -v --platform ${PLATFORM_DISPLAY_NAME:?} --sdk-root ${SDKROOT:?} --framework-search-paths \"${FRAMEWORK_SEARCH_PATHS:?}\" --header-search-paths \"${HEADER_SEARCH_PATHS:?}\" --gcc-preprocessor-definitions \"${GCC_PREPROCESSOR_DEFINITIONS:-}\" --configuration ${CONFIGURATION:?} ${FORCE_COLOR} ${ARCHS:?}";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FB10F2B7F738C0233F4D9919 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				278095D0A528720DD9023CD3 /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7835B4F1812F1C9EC817D5BA /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = (
+					arm64,
+					"arm64-sim",
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "finance-app_iOS/finance-app_iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = U8JHH9PY48;
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "arm64-sim x86_64";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\".\"",
+				);
+				INFOPLIST_FILE = "finance-app_iOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64-sim]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64-sim/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.finance-app.app;
+				PRODUCT_NAME = "finance-app";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64  arm64-sim";
+			};
+			name = release;
+		};
+		7EC6D405B0924EAE77FC31A3 /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ARCHS = (
+					arm64,
+					"arm64-sim",
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "finance-app_iOS/finance-app_iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = U8JHH9PY48;
+				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "arm64-sim x86_64";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\".\"",
+				);
+				INFOPLIST_FILE = "finance-app_iOS/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=arm64-sim]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64-sim/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=arm64]" = "$(inherited) $(PROJECT_DIR)/Externals/arm64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				"LIBRARY_SEARCH_PATHS[arch=x86_64]" = "$(inherited) $(PROJECT_DIR)/Externals/x86_64/$(CONFIGURATION) $(SDKROOT)/usr/lib/swift $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME) $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.finance-app.app;
+				PRODUCT_NAME = "finance-app";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "arm64  arm64-sim";
+			};
+			name = debug;
+		};
+		E00B69AC951E45ED33974851 /* release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = release;
+		};
+		EC1249B7A6042FD4B92D207F /* debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		75722839CD2070DD45771C4E /* Build configuration list for PBXNativeTarget "finance-app_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EC6D405B0924EAE77FC31A3 /* debug */,
+				7835B4F1812F1C9EC817D5BA /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = debug;
+		};
+		C3EBD9A5E1CC3C297296E915 /* Build configuration list for PBXProject "finance-app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC1249B7A6042FD4B92D207F /* debug */,
+				E00B69AC951E45ED33974851 /* release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DC25F9AE495D8FA4BED463A3 /* Project object */;
+}

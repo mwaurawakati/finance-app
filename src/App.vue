@@ -1,0 +1,788 @@
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+//import { get } from "./app/store";
+import { SparklesIcon } from "@heroicons/vue/16/solid";
+import { useRouter, useRoute } from "vue-router";
+import { useAppearanceStore } from "./store/appearance";
+import { useCardStore, CardType } from "./store/cards";
+
+const route = useRoute();
+const router = useRouter();
+const appearanceStore = useAppearanceStore();
+const cardStore = useCardStore();
+const openAccount = ref(false);
+const openManageCard = ref(false);
+const openAddCard = ref(false);
+const cardTypes = ref(["Visa", "MasterCard", "Google", "Apple"]);
+function isActive(path: string) {
+  return route.path === path;
+}
+function saveCardDetails() {
+  console.log("Card Details:", cardDetails.value);
+  openAddCard.value = false;
+  cardDetails.value.ID = cardStore.cards.length;
+  cardStore.cards.push(cardDetails.value);
+}
+onMounted(async () => {
+  //const theme = (await get("theme")) as string;
+  //if (theme) {
+    appearanceStore.changeTheme("system");
+  //}
+  appearanceStore.changeTheme(appearanceStore.theme);
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+  // Listen for changes
+  mediaQuery.addEventListener("change", (_event) => {
+    appearanceStore.changeTheme("system");
+  });
+});
+const cardDetails = ref({
+  Name: "",
+  CardNumber: "",
+  ExpiryDay: "",
+  CVV: "",
+  ID: 0,
+  Type: CardType.Visa,
+  ShowCVV: false,
+  BankName: ""
+});
+</script>
+
+<template>
+  <div
+    class="top-0 absolute w-full h-16 p-4 flex justify-center items-center gap-2 bg-white dark:bg-black border-grey"
+  >
+    <Avatar
+      label="U"
+      @click="openAccount = true"
+      class="!rounded-full !text-primary raised !border"
+      size="large"
+      raised
+    ></Avatar>
+    <div class="flex grow">
+      <IconField class="!w-full">
+        <InputIcon>
+          <i class="pi pi-search" />
+        </InputIcon>
+        <InputText placeholder="Search" class="!w-full" />
+      </IconField>
+    </div>
+    <div class="gap-4 flex">
+      <font-awesome-icon
+        :icon="['fas', 'chart-simple']"
+        class="text-primary"
+        size="2x"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'credit-card']"
+        class="text-primary"
+        size="2x"
+        @click="openManageCard = true"
+      />
+    </div>
+  </div>
+  <div
+    class="bottom-0 absolute w-full h-16 p-0 flex justify-evenly items-center gap-0 bg-white dark:bg-black"
+  >
+    <div
+      class="flex flex-col p-2"
+      :class="{
+        active: isActive('/'),
+      }"
+      @click="router.push('/')"
+    >
+      <font-awesome-icon
+        :icon="['fas', 'f']"
+        :class="
+          isActive('/')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+      />
+      <span
+        :class="
+          isActive('/')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+        >Home</span
+      >
+    </div>
+    <div
+      class="flex flex-col p-2"
+      :class="{
+        active: isActive('/invest'),
+      }"
+      @click="router.push('/invest')"
+    >
+      <font-awesome-icon
+        :icon="['fas', 'chart-line']"
+        :class="
+          isActive('/invest')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+      />
+      <span
+        :class="
+          isActive('/invest')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+        >Invest</span
+      >
+    </div>
+    <div
+      class="flex flex-col p-2"
+      :class="{
+        active: isActive('/payment'),
+      }"
+      @click="router.push('/payment')"
+    >
+      <font-awesome-icon
+        :icon="['fas', 'right-left']"
+        :class="
+          isActive('/payment')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+      />
+      <span
+        :class="
+          isActive('/payment')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+        >Payment</span
+      >
+    </div>
+    <div
+      class="flex flex-col p-2"
+      :class="{
+        active: isActive('/crypto'),
+      }"
+      @click="router.push('/crypto')"
+    >
+      <font-awesome-icon
+        :icon="['fas', 'bitcoin-sign']"
+        :class="
+          isActive('/crypto')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+      />
+      <span
+        :class="
+          isActive('/crypto')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+        >Crypto</span
+      >
+    </div>
+    <div
+      class="flex flex-col justify-center items-center p-2"
+      :class="{
+        active: isActive('/points'),
+      }"
+      @click="router.push('/points')"
+    >
+      <SparklesIcon
+        class="fill-surface-700 dark:fill-white size-4"
+        :class="
+          isActive('/points')
+            ? 'fill-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+      />
+      <span
+        :class="
+          isActive('/points')
+            ? 'text-primary !important'
+            : 'text-surface-700 dark:text-white'
+        "
+        >Points</span
+      >
+    </div>
+  </div>
+  <router-view />
+  <!--Account Drawer-->
+  <!--Drawer
+    v-model:visible="openAccount"
+    header="Account Information"
+    position="left"
+  >
+<Divider />
+<div class="card flex flex-col">
+
+</div>
+</Drawer-->
+
+  <Drawer v-model:visible="openAccount" class="">
+    <template #container="{ closeCallback }">
+      <div class="flex flex-col h-full">
+        <div class="flex items-center justify-between px-6 pt-4 shrink-0">
+          <span class="inline-flex items-center gap-2">
+            <font-awesome-icon
+              :icon="['fas', 'florin-sign']"
+              class="text-black dark:text-white mr-2"
+            />
+            <span class="font-semibold text-2xl text-primary">Finance App</span>
+          </span>
+          <span>
+            <Button
+              type="button"
+              @click="closeCallback"
+              icon="pi pi-times"
+              rounded
+              outlined
+            ></Button>
+          </span>
+        </div>
+        <div class="overflow-y-auto">
+          <ul class="list-none p-4 m-0">
+            <li>
+              <div
+                v-ripple
+                v-styleclass="{
+                  selector: '@next',
+                  enterFromClass: 'hidden',
+                  enterActiveClass: 'animate-slidedown',
+                  leaveToClass: 'hidden',
+                  leaveActiveClass: 'animate-slideup',
+                }"
+                class="p-4 flex items-center justify-between text-surface-500 dark:text-surface-400 cursor-pointer p-ripple"
+              >
+                <span class="font-medium">PERSONAL</span>
+                <i class="pi pi-chevron-down"></i>
+              </div>
+              <ul class="list-none p-0 m-0 overflow-hidden">
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi pi-home mr-2"></i>
+                    <span class="font-medium">Account Info</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi pi-bookmark mr-2"></i>
+                    <span class="font-medium">Cards</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    v-ripple
+                    v-styleclass="{
+                      selector: '@next',
+                      enterFromClass: 'hidden',
+                      enterActiveClass: 'animate-slidedown',
+                      leaveToClass: 'hidden',
+                      leaveActiveClass: 'animate-slideup',
+                    }"
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi pi-chart-line mr-2"></i>
+                    <span class="font-medium">Reports</span>
+                    <i class="pi pi-chevron-down ml-auto"></i>
+                  </a>
+                  <ul
+                    class="list-none py-0 pl-4 pr-0 m-0 hidden overflow-y-hidden transition-all duration-[400ms] ease-in-out"
+                  >
+                    <li>
+                      <a
+                        v-ripple
+                        v-styleclass="{
+                          selector: '@next',
+                          enterFromClass: 'hidden',
+                          enterActiveClass: 'animate-slidedown',
+                          leaveToClass: 'hidden',
+                          leaveActiveClass: 'animate-slideup',
+                        }"
+                        class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                      >
+                        <i class="pi pi-chart-line mr-2"></i>
+                        <span class="font-medium">Revenue</span>
+                        <i class="pi pi-chevron-down ml-auto"></i>
+                      </a>
+                      <ul
+                        class="list-none py-0 pl-4 pr-0 m-0 hidden overflow-y-hidden transition-all duration-[400ms] ease-in-out"
+                      >
+                        <li>
+                          <a
+                            v-ripple
+                            class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                          >
+                            <i class="pi pi-table mr-2"></i>
+                            <span class="font-medium">View</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            v-ripple
+                            class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                          >
+                            <i class="pi pi-search mr-2"></i>
+                            <span class="font-medium">Search</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a
+                        v-ripple
+                        class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                      >
+                        <i class="pi pi-chart-line mr-2"></i>
+                        <span class="font-medium">Expenses</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <SparklesIcon
+                      class="fill-black dark:fill-white size-4 mr-2"
+                    />
+                    <span class="font-medium">Points</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi pi-comments mr-2"></i>
+                    <span class="font-medium">Messages</span>
+                    <span
+                      class="inline-flex items-center justify-center ml-auto bg-primary text-primary-contrast rounded-full"
+                      style="min-width: 1.5rem; height: 1.5rem"
+                      >3</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi pi-calendar mr-2"></i>
+                    <span class="font-medium">Scheduled Payments</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi pi-cog mr-2"></i>
+                    <span class="font-medium">Settings</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="list-none p-4 m-0">
+            <li>
+              <div
+                v-ripple
+                v-styleclass="{
+                  selector: '@next',
+                  enterFromClass: 'hidden',
+                  enterActiveClass: 'animate-slidedown',
+                  leaveToClass: 'hidden',
+                  leaveActiveClass: 'animate-slideup',
+                }"
+                class="p-4 flex items-center justify-between text-surface-500 dark:text-surface-400 cursor-pointer p-ripple"
+              >
+                <span class="font-medium">SERVICES</span>
+                <i class="pi pi-chevron-down"></i>
+              </div>
+              <ul class="list-none p-0 m-0 overflow-hidden">
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi pi-folder mr-2"></i>
+                    <span class="font-medium">Invest</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <i class="pi pi-chart-bar mr-2"></i>
+                    <span class="font-medium">Crypto</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    v-ripple
+                    class="flex items-center cursor-pointer p-4 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+                  >
+                    <font-awesome-icon
+                      :icon="['fas', 'right-left']"
+                      class="text-black dark:text-white mr-2"
+                    />
+                    <span class="font-medium">Payment</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="mt-auto">
+          <hr
+            class="mb-4 mx-4 border-t border-0 border-surface-200 dark:border-surface-700"
+          />
+          <a
+            v-ripple
+            class="m-4 flex items-center cursor-pointer p-4 gap-2 rounded text-surface-700 hover:bg-surface-100 dark:text-surface-0 dark:hover:bg-surface-800 duration-150 transition-colors p-ripple"
+          >
+            <Avatar
+              image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+              shape="circle"
+              label="U"
+              class="!text-primary border"
+              size="large"
+              raised
+            />
+            <span class="font-bold">John Doe</span>
+            <Button label="Logout"></Button>
+          </a>
+        </div>
+      </div>
+    </template>
+  </Drawer>
+
+  <!--Manage Cards-->
+  <Drawer
+    v-model:visible="openManageCard"
+    header="Manage Cards"
+    position="full"
+    style="height: auto"
+  >
+    <div class="flex flex-col justify-center">
+      <Button label="Add Card" @click="openAddCard = true" />
+
+      <div class="grow overflow-scroll">
+        <DataView :value="cardStore.cards" dataKey="CVV" class="">
+          <template #list="slotProps">
+            <div class="flex flex-col">
+              <div v-for="(item, index) in slotProps.items" :key="index">
+                <div
+                  class="flex flex-col sm:flex-row sm:items-center p-0 gap-4"
+                  :class="{
+                    'border-t border-surface-200 dark:border-surface-700':
+                      index !== 0,
+                  }"
+                >
+                  <!--div class="md:w-40 relative">
+                                <img class="block xl:block mx-auto rounded w-full" :src="`https://primefaces.org/cdn/primevue/images/product/${item.image}`" :alt="item.name" />
+                                <div class="absolute bg-black/70 rounded-border" style="left: 4px; top: 4px">
+                                    <Tag :value="item.inventoryStatus" :severity="getSeverity(item)"></Tag>
+                                </div>
+                            </div-->
+                  <div
+                    class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6"
+                  >
+                    <div
+                      class="flex flex-row md:flex-col justify-between items-center gap-2"
+                    >
+                      <Avatar
+                        :image="`${item.Type.toLowerCase()}.png`"
+                        shape="circle"
+                        size="xlarge"
+                      />
+                      <div class="flex flex-col">
+                        <div class="text-lg font-medium mt-2">
+                          Card Name:{{ item.Name }}
+                        </div>
+                        <span
+                          class="font-medium text-surface-500 dark:text-surface-400 text-sm"
+                        >
+                          {{ `Card Number: ****${item.CardNumber.slice(-4)}` }}
+                        </span>
+                        <span
+                          class="font-medium text-surface-500 dark:text-surface-400 text-sm"
+                        >
+                          {{ `Expiry Date: ${item.ExpiryDay}` }}</span
+                        >
+                      </div>
+                      <div class="p-0 h-full flex item-center justify-center">
+                        <div
+                          class="flex items-center gap-0 justify-center py-1 px-0"
+                        >
+                          <ToggleButton
+                            v-model="item.ShowCVV"
+                            offLabel="Show CVV"
+                            :onLabel="item.CVV"
+                          />
+
+                          <span class="text-surface-900 font-bold text-lg">{{
+                            item.Amount
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </DataView>
+      </div>
+    </div>
+  </Drawer>
+
+  <!--Add Card Dialog-->
+  <Dialog
+    v-model:visible="openAddCard"
+    modal
+    header="Add Card"
+    :style="{ width: '90%' }"
+  >
+    <span class="text-surface-500 dark:text-surface-400 block mb-8">
+      Please enter your card details to proceed.
+    </span>
+    <div class="flex flex-col gap-4">
+      <!-- Cardholder Name -->
+      <div class="flex items-center gap-4">
+        <label for="cardholder" class="font-semibold w-24">Cardholder</label>
+        <InputText
+          id="cardholder"
+          class="flex-auto"
+          v-model="cardDetails.Name"
+          placeholder="Name on Card"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Bank Name -->
+      <div class="flex items-center gap-4">
+        <label for="bankname" class="font-semibold w-24">Bank Name</label>
+        <InputText
+          id="bankname"
+          class="flex-auto"
+          v-model="cardDetails.BankName"
+          placeholder="Name of the bank"
+          autocomplete="off"
+        />
+      </div>
+      <!-- Card Number -->
+      <div class="flex items-center gap-4">
+        <label for="cardNumber" class="font-semibold w-24">Card Number</label>
+        <InputMask
+          name="cardNumber"
+          mask="9999 9999 9999 9999"
+          placeholder="1234 5678 1234 5978"
+          v-model="cardDetails.CardNumber"
+          fluid
+        />
+      </div>
+
+      <!--card type-->
+      <Select
+        v-model="cardDetails.Type"
+        :options="cardTypes"
+        filter
+        optionLabel="name"
+        placeholder="Select a Country"
+        class="w-full md:w-56"
+      >
+        <template #value="slotProps">
+          <div v-if="slotProps.value" class="flex items-center">
+            <img
+              :alt="slotProps.value"
+              :src="`${slotProps.value.toLowerCase()}.png`"
+              :class="`mr-2`"
+              style="width: 18px"
+            />
+            <div>{{ slotProps.value }}</div>
+          </div>
+          <span v-else>
+            {{ slotProps.placeholder }}
+          </span>
+        </template>
+        <template #option="slotProps">
+          <div class="flex items-center">
+            <img
+              :alt="slotProps.option"
+              :src="`${slotProps.option.toLowerCase()}.png`"
+              :class="`mr-2`"
+              style="width: 18px"
+            />
+            <div>{{ slotProps.option }}</div>
+          </div>
+        </template>
+      </Select>
+
+      <!-- Expiration Date and CVV -->
+      <div class="flex gap-4">
+        <div class="flex items-center gap-4 flex-1">
+          <label for="expiryDate" class="font-semibold w-24">Expiry</label>
+          <InputMask
+            name="expiryDate"
+            mask="99/99"
+            placeholder="XX/XX"
+            fluid
+            id="expiryDate"
+            v-model="cardDetails.ExpiryDay"
+          />
+        </div>
+        <div class="flex items-center gap-4 flex-1">
+          <label for="cvv" class="font-semibold w-24">CVV</label>
+          <InputMask
+            name="cvv"
+            mask="999"
+            placeholder="XXX"
+            fluid
+            id="expiryDate"
+            v-model="cardDetails.CVV"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Actions -->
+    <div class="flex justify-end gap-2 mt-4">
+      <Button
+        type="button"
+        label="Cancel"
+        severity="secondary"
+        @click="openAddCard = false"
+      ></Button>
+      <Button type="button" label="Save" @click="saveCardDetails"></Button>
+    </div>
+  </Dialog>
+</template>
+
+<style scoped>
+.logo.vite:hover {
+  filter: drop-shadow(0 0 2em #747bff);
+}
+
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #249b73);
+}
+</style>
+<style>
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: #0f0f0f;
+  background-color: #f6f6f6;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.container {
+  margin: 0;
+  padding-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: 0.75s;
+}
+
+.logo.tauri:hover {
+  filter: drop-shadow(0 0 2em #24c8db);
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  text-align: center;
+}
+
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: #0f0f0f;
+  background-color: #ffffff;
+  transition: border-color 0.25s;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: #396cd8;
+}
+button:active {
+  border-color: #396cd8;
+  background-color: #e8e8e8;
+}
+
+input,
+button {
+  outline: none;
+}
+
+#greet-input {
+  margin-right: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #f6f6f6;
+    background-color: #2f2f2f;
+  }
+
+  a:hover {
+    color: #24c8db;
+  }
+
+  input,
+  button {
+    color: #ffffff;
+    background-color: #0f0f0f98;
+  }
+  button:active {
+    background-color: #0f0f0f69;
+  }
+}
+</style>
