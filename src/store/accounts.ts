@@ -20,6 +20,7 @@ interface Account {
 enum AccountType {
   Balance = "Balance",
   Jar = "Jar",
+  Personal = "Personal",
 }
 
 export const useAccountStore = defineStore("account", {
@@ -28,7 +29,7 @@ export const useAccountStore = defineStore("account", {
       {
         ID: 1,
         AccountNumber: 4783932500451082,
-        Name: "EURO",
+        Name: "EUR",
         Balance: 123.09,
         Type: AccountType.Balance,
       },
@@ -65,37 +66,37 @@ export const useAccountStore = defineStore("account", {
       {
         ID: 1,
         AccountNumber: 4783932500451082,
-        Name: "EURO",
-        Balance: 123.44,
-        Type: AccountType.Balance,
+        Name: "EUR",
+        Balance: 7.05,
+        Type: AccountType.Personal,
       },
       {
         ID: 2,
         AccountNumber: 4783932500451082,
         Name: "USD",
         Balance: 12356.22,
-        Type: AccountType.Balance,
+        Type: AccountType.Personal,
       },
       {
         ID: 3,
         AccountNumber: 4783932500451082,
         Name: "GBP",
         Balance: 340.45,
-        Type: AccountType.Balance,
+        Type: AccountType.Personal,
       },
       {
         ID: 4,
         AccountNumber: 4783932500451082,
         Name: "AUD",
         Balance: 2000.453,
-        Type: AccountType.Balance,
+        Type: AccountType.Personal,
       },
       {
         ID: 5,
         AccountNumber: 4783932500451082,
         Name: "JPY",
         Balance: 100.34,
-        Type: AccountType.Balance,
+        Type: AccountType.Personal,
       },
     ] as Account[],
     activeAccountIndex: 0,
@@ -117,6 +118,8 @@ export const useAccountStore = defineStore("account", {
           Type: TransactionType.Add,
           Category: TransactionCategory.Other,
           Status: TransactionStatus.Completed,
+          Image: "",
+          Fee: 0,
         });
         transactionStore.transactions.sort(
           (a, b) => b.Date.getTime() - a.Date.getTime()

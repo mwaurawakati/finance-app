@@ -9,8 +9,8 @@ import { createPinia} from "pinia"
 //import process from "process";
 
 //window.process = process;
-import { faBitcoinSign, faBuildingColumns, faChartLine, faChartSimple, faCircle, faCreditCard, faEllipsis, faF, faFlorinSign, faMagnifyingGlass, faPlus, faRightLeft, faShuffle } from "@fortawesome/free-solid-svg-icons";
-library.add(faChartSimple, faCreditCard, faMagnifyingGlass, faF, faChartLine, faBitcoinSign, faRightLeft, faPlus, faShuffle, faBuildingColumns, faEllipsis, faFlorinSign, faCircle);
+import { faBitcoinSign, faBuildingColumns, faChartLine, faChartSimple, faCircle, faCreditCard, faEllipsis, faF, faFlorinSign, faMagnifyingGlass, faPlus, faRightLeft, faShuffle, faEuroSign } from "@fortawesome/free-solid-svg-icons";
+library.add(faChartSimple, faCreditCard, faMagnifyingGlass, faF, faChartLine, faBitcoinSign, faRightLeft, faPlus, faShuffle, faBuildingColumns, faEllipsis, faFlorinSign, faCircle, faEuroSign);
 import "./assets/index.css";
 import "./assets/styles.scss"
 const app = createApp(App);

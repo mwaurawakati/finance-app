@@ -13,6 +13,8 @@ export interface Transaction {
   Type: TransactionType; // Transaction type (Debit or Credit)
   Category: TransactionCategory; // Category of the transaction, e.g., "Food", "Salary"
   Status: TransactionStatus; // Status of the transaction, e.g., "Completed", "Pending", "Failed"
+  Image: string;
+  Fee: number
 }
 
 export enum TransactionType {
@@ -52,6 +54,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Debit,
         Category: TransactionCategory.Food,
         Status: TransactionStatus.Completed,
+        Image: "/starbucks.png",
+        Fee: 20.021
       },
       {
         ID: 2,
@@ -64,6 +68,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Add,
         Category: TransactionCategory.Salary,
         Status: TransactionStatus.Completed,
+        Image: "/mastercard.png",
+        Fee: 0
       },
       {
         ID: 3,
@@ -76,6 +82,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Credit,
         Category: TransactionCategory.Refund,
         Status: TransactionStatus.Completed,
+        Image: "/bolt.png",
+        Fee: 0,
       },
       {
         ID: 4,
@@ -88,6 +96,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Credit,
         Category: TransactionCategory.Refund,
         Status: TransactionStatus.Completed,
+        Image: "/bolt.png",
+        Fee: 0,
       },
       {
         ID: 5,
@@ -100,6 +110,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Credit,
         Category: TransactionCategory.Refund,
         Status: TransactionStatus.Completed,
+        Image: "/bolt.png",
+        Fee: 0
       },
       {
         ID: 6,
@@ -112,6 +124,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Credit,
         Category: TransactionCategory.Refund,
         Status: TransactionStatus.Completed,
+        Image: "/bolt.png",
+        Fee: 0,
       },
       {
         ID: 7,
@@ -124,6 +138,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Credit,
         Category: TransactionCategory.Refund,
         Status: TransactionStatus.Completed,
+        Image: "/bolt.png",
+        Fee: 0,
       },
       {
         ID: 8,
@@ -136,6 +152,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Credit,
         Category: TransactionCategory.Refund,
         Status: TransactionStatus.Completed,
+        Image: "/bolt.png", 
+        Fee: 0,
       },
       {
         ID: 9,
@@ -148,6 +166,8 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Credit,
         Category: TransactionCategory.Refund,
         Status: TransactionStatus.Completed,
+        Image: "/bolt.png", 
+        Fee: 0,
       },
       {
         ID: 10,
@@ -160,6 +180,36 @@ export const useTransactionStore = defineStore("transactions", {
         Type: TransactionType.Credit,
         Category: TransactionCategory.Refund,
         Status: TransactionStatus.Completed,
+        Image: "/bolt.png",
+        Fee: 0,
+      },
+      {
+        ID: 11,
+        CardHolderName: "Jane Smith",
+        CardNumber: "**** **** **** 5678",
+        Amount: 50.0,
+        Currency: "USD",
+        Date: new Date("2024-11-28T15:00:00"),
+        MerchantOrSource: "Bolt",
+        Type: TransactionType.Debit,
+        Category: TransactionCategory.Refund,
+        Status: TransactionStatus.Completed,
+        Image: "/bolt.png",
+        Fee: 0,
+      },
+      {
+        ID: 12,
+        CardHolderName: "Jane Smith",
+        CardNumber: "**** **** **** 5678",
+        Amount: 50.0,
+        Currency: "USD",
+        Date: new Date("2024-11-21T15:00:00"),
+        MerchantOrSource: "Bolt",
+        Type: TransactionType.Debit,
+        Category: TransactionCategory.Refund,
+        Status: TransactionStatus.Completed,
+        Image: "/bolt.png",
+        Fee: 0
       },
     ] as Transaction[],
     

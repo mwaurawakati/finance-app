@@ -1,95 +1,70 @@
 <template>
   <div
-    class="top-[4rem] bottom-[4rem] absolute w-full bg-inherit p-4 flex flex-col"
+    class="top-[4rem] bottom-[4rem] absolute w-full bg-inherit p-4 flex flex-col overflow-scroll"
   >
     <div class="card !bg-inherit shadow-2xl !p-0">
-      <!--Galleria
-        :value="accountStore.defaultAccounts"
-        :numVisible="5"
-        containerStyle="max-width: 640px"
-        :showThumbnails="false"
-        :showIndicators="true"
-      >
-        <template #item="slotProps">
-          <div class="flex flex-col items-center justify-center p-4">
-            <div class="h-20 mb-3">
-              <div class="flex gap-1 item-center justify-center">
-                <div class="flex items-center"></div>
-                <div class="flex items-center justify-center">
-                  <p
-                    class="text-surface-700 dark:text-white text-4xl text-center flex items-center justify-center"
-                  >
-                    {{ slotProps.item.Type }}
-                  </p>
-                </div>
-                <div class="flex items-center justify-center">
-                  <font-awesome-icon
-                    :icon="['fas', 'circle']"
-                    class="text-surface-700 dark:text-white"
-                  />
-                </div>
-                <p
-                  class="text-surface-700 dark:text-white text-3xl text-center flex items-center"
-                >
-                  {{ slotProps.item.Name }}
-                </p>
-              </div>
-              <span
-                class="text-surface-700 text-5xl dark:text-white w-full text-center flex justify-center"
-                >{{ Math.floor(slotProps.item.Balance) }},<span
-                  class="align-baseline inline-block flex items-end text-2xl"
-                  >{{
-                    slotProps.item.Balance.toString().split(".")[1] || ""
-                  }}</span
-                ></span
-              >
-            </div>
-            <Button label="Accounts" />
-          </div>
-        </template>
-      </Galleria-->
       <swiper
         :slides-per-view="1"
         :space-between="50"
         @swiper="onSwiper"
         @slideChange="onSlideChange"
+        class="swiper"
+        :modules="modules"
+        :pagination="{
+          clickable: true,
+          dynamicBullets: true,
+          dynamicMainBullets: 4,
+        }"
       >
         <swiper-slide
           v-for="(item, index) in accountStore.defaultAccounts"
           :key="index"
         >
-          <div class="flex flex-col items-center justify-center p-4">
+          <div class="flex flex-col items-center justify-center p-4 h-[330px]">
             <div class="h-20 mb-3">
               <div class="flex gap-1 item-center justify-center">
                 <div class="flex items-center"></div>
                 <div class="flex items-center justify-center">
+                  <Avatar image="/eur3.png" shape="circle" class="!w-6 !h-6" />
                   <p
-                    class="text-surface-700 dark:text-white text-4xl text-center flex items-center justify-center"
+                    class="text-surface-700 dark:text-white text-xl text-center flex items-center justify-center ml-2"
                   >
                     {{ item.Type }}
                   </p>
                 </div>
-                <div class="flex items-center justify-center">
-                  <font-awesome-icon
-                    :icon="['fas', 'circle']"
-                    class="text-surface-700 dark:text-white"
-                  />
+                <div class="flex items-center justify-center h-full">
+                  <span>.</span>
                 </div>
                 <p
-                  class="text-surface-700 dark:text-white text-3xl text-center flex items-center"
+                  class="text-surface-700 dark:text-white text-xl text-center flex items-center"
                 >
                   {{ item.Name }}
                 </p>
               </div>
               <span
-                class="text-surface-700 text-5xl dark:text-white w-full text-center flex justify-center"
-                >{{ Math.floor(item.Balance) }},<span
-                  class="align-baseline inline-block flex items-end text-2xl"
-                  >{{ item.Balance.toFixed(2).toString().split(".")[1] || "" }}</span
-                ></span
+                style="font-family: system-ui"
+                class="font-black text-surface-700 text-6xl dark:text-white w-full text-center flex justify-center"
               >
+                {{ Math.floor(item.Balance) }}
+                <span class="text-xl flex items-end">,</span>
+                <span
+                  class="align-baseline inline-block flex items-end text-2xl"
+                >
+                  {{ item.Balance.toFixed(2).toString().split(".")[1] || "" }}
+                  {{ getSymbolFromCurrency(item.Name) }}
+                </span>
+              </span>
             </div>
-            <Button label="Accounts" />
+            <Button
+              label="Accounts"
+              rounded
+              class="dark:!bg-neutral-800 !border-none dark:!text-white !px-4 !font-black mt-2"
+              :dt="{
+                label: {
+                  font: { weight: '800' },
+                },
+              }"
+            />
           </div>
         </swiper-slide>
       </swiper>
@@ -99,35 +74,40 @@
           @click="openAddMoney = true"
         >
           <div
-            class="rounded-full w-[50px] h-[50px] p-0 bg-slate-300 dark:bg-neutral-800 flex items-center justify-center"
+            class="rounded-full w-[60px] h-[60px] p-0 bg-slate-300 dark:bg-neutral-800 flex items-center justify-center"
           >
             <font-awesome-icon
               :icon="['fas', 'plus']"
               class="text-surface-700 dark:text-white"
+              size="xl"
             />
           </div>
-          <span class="text-surface-700 text-nowrap font-bold dark:text-white"
+          <span
+            class="text-surface-700 text-nowrap font-extrabold dark:text-white"
             >Add money</span
           >
         </div>
         <div class="flex flex-col p-2 items-center">
           <div
-            class="rounded-full w-[50px] h-[50px] p-0 bg-slate-300 dark:bg-neutral-800 flex items-center justify-center"
+            class="rounded-full w-[60px] h-[60px] p-0 bg-slate-300 dark:bg-neutral-800 flex items-center justify-center"
           >
             <font-awesome-icon
               :icon="['fas', 'shuffle']"
               class="text-surface-700 dark:text-white"
+              size="xl"
+              flip="vertical"
             />
           </div>
           <span class="text-surface-700 font-bold dark:text-white">Move</span>
         </div>
         <div class="flex flex-col p-2 items-center">
           <div
-            class="rounded-full w-[50px] h-[50px] p-0 bg-slate-300 dark:bg-neutral-800 flex items-center justify-center"
+            class="rounded-full w-[60px] h-[60px] p-0 bg-slate-300 dark:bg-neutral-800 flex items-center justify-center"
           >
             <font-awesome-icon
               :icon="['fas', 'building-columns']"
               class="text-surface-700 dark:text-white"
+              size="xl"
             />
           </div>
           <span class="text-surface-700 font-bold dark:text-white"
@@ -136,11 +116,12 @@
         </div>
         <div class="flex flex-col p-2 items-center">
           <div
-            class="rounded-full w-[50px] h-[50px] p-0 bg-slate-300 flex dark:bg-neutral-800 items-center justify-center"
+            class="rounded-full w-[60px] h-[60px] p-0 bg-slate-300 flex dark:bg-neutral-800 items-center justify-center"
           >
             <font-awesome-icon
               :icon="['fas', 'ellipsis']"
               class="text-surface-700 dark:text-white"
+              size="xl"
             />
           </div>
           <span class="text-surface-700 font-bold dark:text-white">More</span>
@@ -149,8 +130,13 @@
     </div>
 
     <!--Transactions-->
-    <div class="grow overflow-scroll">
-      <DataView :value="transactionStore.transactions" dataKey="ID" class="">
+    <div class="grow rounded-3xl">
+      <DataView
+        :value="transactionStore.transactions"
+        dataKey="ID"
+        class="!rounded-3xl"
+        :dt="dataViewDT"
+      >
         <template #list="slotProps">
           <div class="flex flex-col">
             <div v-for="(item, index) in slotProps.items" :key="index">
@@ -161,20 +147,18 @@
                     index !== 0,
                 }"
               >
-                <!--div class="md:w-40 relative">
-                                <img class="block xl:block mx-auto rounded w-full" :src="`https://primefaces.org/cdn/primevue/images/product/${item.image}`" :alt="item.name" />
-                                <div class="absolute bg-black/70 rounded-border" style="left: 4px; top: 4px">
-                                    <Tag :value="item.inventoryStatus" :severity="getSeverity(item)"></Tag>
-                                </div>
-                            </div-->
                 <div
                   class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6"
                 >
-                  <div
-                    class="flex flex-row md:flex-col justify-between items-center gap-2"
-                  >
-                    <div>
-                      <div class="text-lg font-medium mt-2">
+                  <div class="flex flex-row items-center gap-2">
+                    <img
+                      :src="item.Image"
+                      size="large"
+                      shape="circle"
+                      class="!w-[70px] !h-[70px] rounded-full"
+                    />
+                    <div class="grow">
+                      <div class="text-lg font-medium mt-2 grow">
                         {{ formatTransactiontext(item) }}
                       </div>
                       <span
@@ -183,20 +167,20 @@
                       >
                     </div>
                     <div
-                      class="bg-surface-100 p-1 h-full flex item-center justify-center"
+                      class="p-1 h-full flex item-center justify-center"
                       style="border-radius: 30px"
                     >
                       <div
-                        class="bg-surface-0 flex items-center gap-2 justify-center py-1 px-2"
+                        class="flex items-center gap-2 justify-center py-1 px-2"
                         style="
                           border-radius: 30px;
                           box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04),
                             0px 1px 2px 0px rgba(0, 0, 0, 0.06);
                         "
                       >
-                        <span class="text-surface-900 font-bold text-lg">{{
-                          formatCurrency(item)
-                        }}</span>
+                        <span class="dark:text-white font-bold text-lg">
+                          {{ formatCurrency(item) }}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -314,7 +298,9 @@
             /-->
                 <div class="flex flex-col">
                   <span>{{ slotProps.option.Name }}</span>
-                  <span>Balance: {{ slotProps.option.Balance.toFixed(2) }}</span>
+                  <span
+                    >Balance: {{ slotProps.option.Balance.toFixed(2) }}</span
+                  >
                 </div>
               </div>
             </template>
@@ -330,7 +316,13 @@
           severity="secondary"
           @click="openAddMoney = false"
         ></Button-->
-        <Button type="button" label="Add money securely" @click="saveAddMoney" fluid rounded></Button>
+        <Button
+          type="button"
+          label="Add money securely"
+          @click="saveAddMoney"
+          fluid
+          rounded
+        ></Button>
       </div>
     </div>
   </Drawer>
@@ -343,7 +335,10 @@ import { useAccountStore } from "../store/accounts";
 import { useTransactionStore, Transaction } from "../store/transactions";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
-
+import { Pagination } from "swiper/modules";
+import "swiper/css/pagination";
+import getSymbolFromCurrency from "currency-symbol-map";
+const modules = ref([Pagination]);
 const cardStore = useCardStore();
 const accountStore = useAccountStore();
 const transactionStore = useTransactionStore();
@@ -364,10 +359,14 @@ const onSlideChange = (e: any) => {
 
 function saveAddMoney() {
   console.log("Accpount Details:", selectedAccount);
-  console.log(addValue.value)
+  console.log(addValue.value);
   openAddMoney.value = false;
   //selectedAccount.value.Balance += addValue.value;
-  accountStore.updateAccount(selectedAccount.value.ID, addValue.value, selectedCard.value)
+  accountStore.updateAccount(
+    selectedAccount.value.ID,
+    addValue.value,
+    selectedCard.value
+  );
   //cardDetails.value.ID = cardStore.cards.length;
   //cardStore.cards.push(cardDetails.value);
 }
@@ -375,7 +374,7 @@ function saveAddMoney() {
 function formatTransactiontext(ts: Transaction) {
   switch (ts.Type) {
     case "Debit":
-      return `You have sent ${ts.Amount} ${ts.Currency} to ${ts.MerchantOrSource}`;
+      return `${ts.MerchantOrSource}`;
     case "Credit":
       return `You have received ${ts.Amount} ${ts.Currency} from ${ts.MerchantOrSource}`;
     case "Add":
@@ -386,45 +385,32 @@ function formatTransactiontext(ts: Transaction) {
 function formatCurrency(ts: Transaction) {
   switch (ts.Type) {
     case "Debit":
-      return `-${ts.Amount}`;
+      return `-${ts.Amount}${getSymbolFromCurrency(ts.Currency)}`;
     default:
-      return `+${ts.Amount}`;
+      return `+${ts.Amount}${getSymbolFromCurrency(ts.Currency)}`;
   }
 }
 // Format date for better readability
-function formatRelativeTime(date: Date) {
+function formatRelativeTime(date: Date): string {
   const now = new Date();
-  const diffInMs = now.getTime() - date.getTime(); // Difference in milliseconds
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Start of today
+  const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000); // Start of yesterday
 
-  const seconds = Math.floor(diffInMs / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  //const weeks = Math.floor(days / 7);
+  const dateTimeString = date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-  if (seconds < 60) {
-    return `${seconds} sec ago`;
-  } else if (minutes < 60) {
-    return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
-  } else if (hours < 24) {
-    return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-  } else if (days === 1) {
-    return `Yesterday, ${new Date(date).toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    })}`;
-  } else if (days < 7) {
-    return `${new Date(date).toLocaleDateString([], {
-      weekday: "long",
-      hour: "2-digit",
-      minute: "2-digit",
-    })}`;
+  if (date >= today) {
+    return `Today, ${dateTimeString}`;
+  } else if (date >= yesterday) {
+    return `Yesterday, ${dateTimeString}`;
   } else {
-    return `${new Date(date).toLocaleDateString([], {
-      weekday: "long",
-      hour: "2-digit",
-      minute: "2-digit",
-    })}`;
+    return `${date.toLocaleDateString([], {
+      day: "numeric",
+    })}. ${date.toLocaleDateString([], {
+      month: "short",
+    })}, ${dateTimeString}`;
   }
 }
 
@@ -433,4 +419,38 @@ const selectDT = ref({
     width: "100px",
   },
 });
+
+const dataViewDT = ref({
+  content: {
+    border: {
+      radius: "20px",
+    },
+  },
+});
 </script>
+
+<style>
+.swiper-pagination-bullet {
+  width: 5px;
+  height: 5px;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  margin: 2px !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+  width: 7px;
+  height: 7px;
+  opacity: 1;
+}
+.swiper-pagination-bullet-active-next {
+  width: 3px;
+  height: 3px;
+}
+.swiper-pagination {
+  bottom: 20px;
+}
+</style>

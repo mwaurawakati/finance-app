@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { set } from "../app/store";
-import { invoke } from "@tauri-apps/api/core";
+import { invoke, isTauri } from "@tauri-apps/api/core";
 export const useAppearanceStore = defineStore("appearance", {
   state: () => ({
     theme: "system" as "system" | "dark" | "light",
@@ -23,45 +23,45 @@ export const useAppearanceStore = defineStore("appearance", {
           htmlElement.classList.add("dark");
           bodyElement.style.backgroundColor = "#000000"; // Dark background
           htmlElement.style.backgroundColor = "#000000"; // Dark background
-          
+
           if (statusBarMetaTag)
             statusBarMetaTag.setAttribute("content", "#000000");
           if (themeColorMetaTag)
             themeColorMetaTag.setAttribute("content", "#000000");
-          invoke("safe_area_color", { name: "#000000" });
+          if (isTauri()) invoke("safe_area_color", { name: "#000000" });
         } else {
           htmlElement.classList.remove("dark");
           bodyElement.style.backgroundColor = "#ffffff"; // Light background
           htmlElement.style.backgroundColor = "#ffffff"; // Light background
-          
+
           if (statusBarMetaTag)
             statusBarMetaTag.setAttribute("content", "default");
           if (themeColorMetaTag)
             themeColorMetaTag.setAttribute("content", "#ffffff");
-          invoke("safe_area_color", { name: "#FEFEFE" });
+          if (isTauri()) invoke("safe_area_color", { name: "#FEFEFE" });
         }
       } else if (theme === "dark") {
         this.theme = "dark";
         htmlElement.classList.add("dark");
         bodyElement.style.backgroundColor = "#000000"; // Dark background
         htmlElement.style.backgroundColor = "#000000"; // Dark background
-        
+
         if (statusBarMetaTag)
           statusBarMetaTag.setAttribute("content", "#000000");
         if (themeColorMetaTag)
           themeColorMetaTag.setAttribute("content", "#000000");
-        invoke("safe_area_color", { name: "#000000" }); 
+        if (isTauri()) invoke("safe_area_color", { name: "#000000" });
       } else {
         this.theme = "light";
         htmlElement.classList.remove("dark");
         bodyElement.style.backgroundColor = "#ffffff"; // Light background
         htmlElement.style.backgroundColor = "#ffffff"; // Light background
-        
+
         if (statusBarMetaTag)
           statusBarMetaTag.setAttribute("content", "default");
         if (themeColorMetaTag)
           themeColorMetaTag.setAttribute("content", "#ffffff");
-        invoke("safe_area_color", { name: "#FEFEFE" });
+        if (isTauri()) invoke("safe_area_color", { name: "#FEFEFE" });
       }
     },
   },

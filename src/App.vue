@@ -5,7 +5,8 @@ import { SparklesIcon } from "@heroicons/vue/16/solid";
 import { useRouter, useRoute } from "vue-router";
 import { useAppearanceStore } from "./store/appearance";
 import { useCardStore, CardType } from "./store/cards";
-
+import { RevolutIcon } from "vue3-simple-icons";
+import { ChartNoAxesCombined } from "lucide-vue-next";
 const route = useRoute();
 const router = useRouter();
 const appearanceStore = useAppearanceStore();
@@ -26,7 +27,7 @@ function saveCardDetails() {
 onMounted(async () => {
   //const theme = (await get("theme")) as string;
   //if (theme) {
-    appearanceStore.changeTheme("system");
+  appearanceStore.changeTheme("system");
   //}
   appearanceStore.changeTheme(appearanceStore.theme);
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -44,7 +45,7 @@ const cardDetails = ref({
   ID: 0,
   Type: CardType.Visa,
   ShowCVV: false,
-  BankName: ""
+  BankName: "",
 });
 </script>
 
@@ -52,82 +53,100 @@ const cardDetails = ref({
   <div
     class="top-0 absolute w-full h-16 p-4 flex justify-center items-center gap-2 bg-white dark:bg-black border-grey"
   >
-    <Avatar
-      label="U"
-      @click="openAccount = true"
-      class="!rounded-full !text-primary raised !border"
-      size="large"
-      raised
-    ></Avatar>
+    <OverlayBadge severity="danger">
+      <Avatar
+        label="U"
+        @click="openAccount = true"
+        class="!rounded-full dark:!text-white !w-10 !h-10 raised !border-none dark:!bg-neutral-800"
+        raised
+      ></Avatar>
+    </OverlayBadge>
     <div class="flex grow">
-      <IconField class="!w-full">
+      <IconField class="!w-full !rounded-full !border-none">
         <InputIcon>
-          <i class="pi pi-search" />
+          <i class="pi pi-search !text-white fill-white" />
         </InputIcon>
-        <InputText placeholder="Search" class="!w-full" />
+        <InputText
+          placeholder="Search"
+          class="!w-full !rounded-full !text-white !border-none !bg-neutral-800"
+        />
       </IconField>
     </div>
-    <div class="gap-4 flex">
-      <font-awesome-icon
-        :icon="['fas', 'chart-simple']"
-        class="text-primary"
-        size="2x"
-      />
-      <font-awesome-icon
-        :icon="['fas', 'credit-card']"
-        class="text-primary"
-        size="2x"
-        @click="openManageCard = true"
-      />
+    <div class="gap-2 flex">
+      <div
+        class="rounded-full dark:bg-neutral-800 w-10 flex items-center justify-center h-10"
+      >
+        <font-awesome-icon
+          :icon="['fas', 'chart-simple']"
+          class="dark:text-white"
+          size="lg"
+        />
+      </div>
+      <div
+        class="rounded-full dark:bg-neutral-800 w-10 flex items-center justify-center h-10"
+      >
+        <font-awesome-icon
+          :icon="['fas', 'credit-card']"
+          class="dark:text-white"
+          size="lg"
+          @click="openManageCard = true"
+        />
+      </div>
     </div>
   </div>
   <div
     class="bottom-0 absolute w-full h-16 p-0 flex justify-evenly items-center gap-0 bg-white dark:bg-black"
   >
     <div
-      class="flex flex-col p-2"
+      class="flex flex-col p-2 justify-center items-center"
       :class="{
         active: isActive('/'),
       }"
       @click="router.push('/')"
     >
-      <font-awesome-icon
-        :icon="['fas', 'f']"
+      <RevolutIcon
         :class="
           isActive('/')
-            ? 'text-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'fill-[#687DFD] !important'
+            : 'fill-[#A3A1A5] dark:text-white'
         "
       />
       <span
         :class="
           isActive('/')
-            ? 'text-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'text-[#687DFD] !important'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
         "
         >Home</span
       >
     </div>
     <div
-      class="flex flex-col p-2"
+      class="flex flex-col p-2 items-center"
       :class="{
         active: isActive('/invest'),
       }"
       @click="router.push('/invest')"
     >
-      <font-awesome-icon
+      <!--font-awesome-icon
         :icon="['fas', 'chart-line']"
         :class="
           isActive('/invest')
             ? 'text-primary !important'
             : 'text-surface-700 dark:text-white'
         "
+      /-->
+      <ChartNoAxesCombined
+        :class="
+          isActive('/invest')
+            ? '!text-[#687DFD]'
+            : 'text-[#A3A1A5] dark:!text-[#A3A1A5]'
+        "
       />
       <span
         :class="
           isActive('/invest')
-            ? 'text-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'text-[#687DFD] !important'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
         "
         >Invest</span
       >
