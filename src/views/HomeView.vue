@@ -1,6 +1,8 @@
 <template>
   <div
-    class="top-[4rem] bottom-[4rem] absolute w-full bg-inherit p-4 flex flex-col overflow-scroll"
+    ref="el"
+    id="cont"
+    class="top-[60px] bottom-0 absolute w-full bg-inherit p-4 flex flex-col overflow-scroll h-auto mb-[0px]"
   >
     <div class="card !bg-inherit shadow-2xl !p-0">
       <swiper
@@ -25,7 +27,11 @@
               <div class="flex gap-1 item-center justify-center">
                 <div class="flex items-center"></div>
                 <div class="flex items-center justify-center">
-                  <Avatar image="/eur3.png" shape="circle" class="!w-6 !h-6" />
+                  <Avatar
+                    :image="`${item.Name.toLocaleLowerCase()}.png`"
+                    shape="circle"
+                    class="!w-6 !h-6"
+                  />
                   <p
                     class="text-surface-700 dark:text-white text-xl text-center flex items-center justify-center ml-2"
                   >
@@ -196,92 +202,70 @@
   <!--Add money-->
   <Drawer
     v-model:visible="openAddMoney"
-    header="Add Money"
     position="full"
-    style="height: auto"
+    style="height: 90%"
+    :dt="{}"
   >
-    <div class="flex flex-col h-full">
-      <div class="grow flex flex-col gap-4">
-        <!--card type-->
-        <Select
-          v-model="selectedCard"
-          :options="cardStore.cards"
-          filter
-          optionLabel="name"
-          placeholder="Select a Country"
-          class="w-full md:w-56 !border-primary !rounded"
-          :dt="selectDT"
+    <template #container>
+      <div class="p-4">
+        <Button
+          class="!float-left !bg-inherit !border-none dark:!text-white !border-transparent"
+          size="large"
+          @click="openAddMoney = false"
         >
-          <template #dropdownicon>
-            <Button label="Change" />
+          <template #icon>
+            <i class="pi pi-arrow-left" style="font-size: 1.5rem" />
           </template>
-          <template #value="slotProps">
-            <div v-if="slotProps.value" class="flex items-center">
-              <img
-                :alt="slotProps.value"
-                :src="`${slotProps.value.Type.toLowerCase()}.png`"
-                :class="`mr-2`"
-                style="width: 18px"
-              />
-              <div class="flex flex-col">
-                <span>{{ slotProps.value.BankName }}</span>
-                <span
-                  >{{ slotProps.value.Type }}***{{
-                    slotProps.value.CardNumber.slice(-4)
-                  }}</span
-                >
-              </div>
-            </div>
-            <span v-else>
-              {{ slotProps.placeholder }}
-            </span>
-          </template>
-          <template #option="slotProps">
-            <div class="flex items-center">
-              <img
-                :alt="slotProps.option.Name"
-                :src="`${slotProps.option.Type.toLowerCase()}.png`"
-                :class="`mr-2`"
-                style="width: 18px"
-              />
-              <div class="flex flex-col">
-                <span>{{ slotProps.option.BankName }}</span>
-                <span
-                  >{{ slotProps.option.Type }}***{{
-                    slotProps.option.CardNumber.slice(-4)
-                  }}</span
-                >
-              </div>
-            </div>
-          </template>
-        </Select>
-        <div
-          class="w-full my-[-15px] flex justify-center z-10"
-          style="margin-top: -25px; margin-bottom: -25px"
-        >
-          <Button icon="pi pi-arrow-down" rounded />
-        </div>
-        <div class="flex gap-2 p-4 border border-solid border-primary">
+        </Button>
+        <BiShieldQuarter
+          color="blue"
+          size="30"
+          style="transform: scaleX(-1); float: right"
+        />
+      </div>
+
+      <div class="flex flex-col h-full p-4">
+        <h1 class="w-full text-left">Add money</h1>
+        <div class="grow flex flex-col gap-3">
+          <!--card type-->
           <Select
-            v-model="selectedAccount"
-            :options="accountStore.defaultAccounts"
+            v-model="selectedCard"
+            :options="cardStore.cards"
             filter
             optionLabel="name"
             placeholder="Select a Country"
-            class="w-full md:w-56"
-            fluid
+            class="w-full md:w-56 !rounded-xl !border-none !p-4 dark:!bg-[#1a2746]"
+            :dt="selectDT"
           >
+            <template #dropdownicon>
+              <Button
+                label="Change"
+                rounded
+                class="!bg-[#0a3690] !border-none"
+              />
+            </template>
             <template #value="slotProps">
               <div v-if="slotProps.value" class="flex items-center">
-                <!--img
-              :alt="slotProps.value"
-              :src="`${slotProps.value.Type.toLowerCase()}.png`"
-              :class="`mr-2`"
-              style="width: 18px"
-            /-->
+                <img
+                  :alt="slotProps.value"
+                  :src="`${slotProps.value.Type.toLowerCase()}.png`"
+                  :class="`mr-6 rounded-full`"
+                  style="width: 40px"
+                />
                 <div class="flex flex-col">
-                  <span>{{ slotProps.value.Name }}</span>
-                  <span>Balance: {{ slotProps.value.Balance.toFixed(2) }}</span>
+                  <span class="font-extrabold uppercase">{{
+                    slotProps.value.BankName
+                  }}</span>
+                  <div class="flex items-center justify-cente">
+                    <span class="uppercase mr-1">{{
+                      slotProps.value.Type
+                    }}</span>
+                    <div class="flex items-center justify-center h-full">
+                      <span>&#183;</span>
+                      <span>&#183;</span>
+                    </div>
+                    <span>{{ slotProps.value.CardNumber.slice(-4) }}</span>
+                  </div>
                 </div>
               </div>
               <span v-else>
@@ -290,46 +274,109 @@
             </template>
             <template #option="slotProps">
               <div class="flex items-center">
-                <!--img
-              :alt="slotProps.option.Name"
-              :src="`${slotProps.option.Type.toLowerCase()}.png`"
-              :class="`mr-2`"
-              style="width: 18px"
-            /-->
+                <img
+                  :alt="slotProps.option.Name"
+                  :src="`${slotProps.option.Type.toLowerCase()}.png`"
+                  :class="`mr-2`"
+                  style="width: 18px"
+                />
                 <div class="flex flex-col">
-                  <span>{{ slotProps.option.Name }}</span>
+                  <span>{{ slotProps.option.BankName }}</span>
                   <span
-                    >Balance: {{ slotProps.option.Balance.toFixed(2) }}</span
+                    >{{ slotProps.option.Type }}***{{
+                      slotProps.option.CardNumber.slice(-4)
+                    }}</span
                   >
                 </div>
               </div>
             </template>
           </Select>
-          <InputNumber fluid v-model="addValue" placeHolder="Add value" />
+          <div
+            class="w-full my-[-10px] flex justify-center z-10"
+            style="margin-top: -25px; margin-bottom: -25px"
+          >
+            <Button rounded class="dark:!bg-black !border-none">
+              <template #icon>
+                <i class="pi pi-arrow-down text-white" />
+              </template>
+            </Button>
+          </div>
+          <div
+            class="flex gap-2 p-4 !rounded-xl !border-none !p-4 dark:!bg-[#3f6dc9]"
+          >
+            <div class="flex flex-col w-1/2">
+              <Select
+                v-model="selectedAccount"
+                :options="accountStore.defaultAccounts"
+                filter
+                optionLabel="name"
+                placeholder="Select a Country"
+                class="w-full md:w-56 !bg-transparent !border-none flex gap-2 p-[10px]"
+                fluid
+                unstyled
+              >
+                <template #value="slotProps">
+                  <div v-if="slotProps.value" class="flex items-center">
+                    <img
+                      :alt="slotProps.value"
+                      :src="`${slotProps.value.Name.toLowerCase()}.png`"
+                      :class="`mr-2 rounded-full`"
+                      style="width: 18px"
+                    />
+                    <div class="flex flex-col font-black">
+                      <span>{{ slotProps.value.Name }}</span>
+                    </div>
+                  </div>
+                  <span v-else>
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+                <template #option="slotProps">
+                  <div class="flex items-center">
+                    <img
+                      :alt="slotProps.option.Name"
+                      :src="`${slotProps.option.Name.toLowerCase()}.png`"
+                      :class="`mr-2`"
+                      style="width: 18px"
+                    />
+                    <div class="flex flex-col">
+                      <span>{{ slotProps.option.Name }}</span>
+                    </div>
+                  </div>
+                </template>
+              </Select>
+              <div class="ml-2 mt-4 opacity-60">
+                <span
+
+                  >Balance: {{ selectedAccount.Balance.toFixed(2) }}
+                  {{ getSymbolFromCurrency(selectedAccount.Name) }}</span
+                >
+              </div>
+            </div>
+            <div class="w-1/2 flex flex-col">
+              <InputNumber unstyled :focused="openAddMoney" class="!border-none !bg-transparent font-black text-lg w-auto in" v-model="addValue" placeHolder="Add value" :suffix="getSymbolFromCurrency(selectedAccount.Name)"/>
+              <span class="text-end opacity-65 mt-3 mr-8">No fee</span>
+            </div>
+          </div>
+        </div>
+        <!-- Actions -->
+        <div class="flex justify-end gap-2 mt-4">
+          <Button
+            type="button"
+            class="!border-none !bg-[#2ea9ff]"
+            label="Add money securely"
+            @click="saveAddMoney"
+            fluid
+            rounded
+          ></Button>
         </div>
       </div>
-      <!-- Actions -->
-      <div class="flex justify-end gap-2 mt-4">
-        <!--Button
-          type="button"
-          label="Cancel"
-          severity="secondary"
-          @click="openAddMoney = false"
-        ></Button-->
-        <Button
-          type="button"
-          label="Add money securely"
-          @click="saveAddMoney"
-          fluid
-          rounded
-        ></Button>
-      </div>
-    </div>
+    </template>
   </Drawer>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch, toRefs } from "vue";
 import { useCardStore } from "../store/cards";
 import { useAccountStore } from "../store/accounts";
 import { useTransactionStore, Transaction } from "../store/transactions";
@@ -338,6 +385,30 @@ import "swiper/css";
 import { Pagination } from "swiper/modules";
 import "swiper/css/pagination";
 import getSymbolFromCurrency from "currency-symbol-map";
+import { useScroll } from "@vueuse/core";
+import { BiShieldQuarter } from "vue-icons-plus/bi";
+
+const el = ref<HTMLElement | null>(null);
+const { isScrolling, arrivedState, directions } = useScroll(el);
+const { bottom } = toRefs(arrivedState);
+const { top: toTop, bottom: toBottom } = toRefs(directions);
+watch(isScrolling, (_newScrolling, _oldScrolling) => {
+  let navBar = document.getElementById("nav-bar-bottom")!;
+  let cont = document.getElementById("cont")!;
+  if (toBottom.value && !bottom.value) {
+    navBar.style.display = "none";
+    cont.style.marginBottom = "0px";
+  } else if (toBottom.value && bottom.value) {
+    navBar.style.display = "flex";
+    cont.style.marginBottom = "70px";
+  } else if (toTop.value) {
+    navBar.style.display = "flex";
+    cont.style.marginBottom = "0px";
+  } else {
+    navBar.style.display = "flex";
+    cont.style.marginBottom = "0px";
+  }
+});
 const modules = ref([Pagination]);
 const cardStore = useCardStore();
 const accountStore = useAccountStore();
@@ -452,5 +523,12 @@ const dataViewDT = ref({
 }
 .swiper-pagination {
   bottom: 20px;
+}
+
+.in input {
+  width: 80px;
+  background-color: transparent;
+  padding: 10px;
+  float: right;
 }
 </style>

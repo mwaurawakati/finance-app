@@ -51,7 +51,7 @@ const cardDetails = ref({
 
 <template>
   <div
-    class="top-0 absolute w-full h-16 p-4 flex justify-center items-center gap-2 bg-white dark:bg-black border-grey"
+    class="top-0 fixed w-full h-16 p-4 flex justify-center items-center gap-2 bg-white dark:bg-black border-grey z-100"
   >
     <OverlayBadge severity="danger">
       <Avatar
@@ -95,7 +95,8 @@ const cardDetails = ref({
     </div>
   </div>
   <div
-    class="bottom-0 absolute w-full h-16 p-0 flex justify-evenly items-center gap-0 bg-white dark:bg-black"
+    id="nav-bar-bottom"
+    class="bottom-0 fixed w-full h-20 p-0 flex justify-evenly items-center gap-0 bg-white dark:bg-slate-600 z-10"
   >
     <div
       class="flex flex-col p-2 justify-center items-center"
@@ -114,8 +115,8 @@ const cardDetails = ref({
       <span
         :class="
           isActive('/')
-            ? 'text-[#687DFD] !important'
-            : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
+            ? 'text-[#687DFD] fold-bold font-bold text-sm'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5] font-bold text-sm'
         "
         >Home</span
       >
@@ -145,8 +146,8 @@ const cardDetails = ref({
       <span
         :class="
           isActive('/invest')
-            ? 'text-[#687DFD] !important'
-            : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
+            ? 'text-[#687DFD] fold-bold font-bold text-sm'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5] font-bold text-sm'
         "
         >Invest</span
       >
@@ -159,18 +160,19 @@ const cardDetails = ref({
       @click="router.push('/payment')"
     >
       <font-awesome-icon
-        :icon="['fas', 'right-left']"
+        :icon="['fas', 'arrow-right-arrow-left']"
+        size="xl"
         :class="
           isActive('/payment')
-            ? 'text-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'text-[#687DFD] !important'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
         "
       />
       <span
         :class="
           isActive('/payment')
-            ? 'text-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'text-[#687DFD] fold-bold font-bold text-sm'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5] font-bold text-sm'
         "
         >Payment</span
       >
@@ -184,17 +186,18 @@ const cardDetails = ref({
     >
       <font-awesome-icon
         :icon="['fas', 'bitcoin-sign']"
+        size="xl"
         :class="
           isActive('/crypto')
-            ? 'text-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'text-[#687DFD] font-bold'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
         "
       />
       <span
         :class="
           isActive('/crypto')
-            ? 'text-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'text-[#687DFD] fold-bold font-bold text-sm'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5] font-bold text-sm'
         "
         >Crypto</span
       >
@@ -206,21 +209,42 @@ const cardDetails = ref({
       }"
       @click="router.push('/points')"
     >
-      <SparklesIcon
-        class="fill-surface-700 dark:fill-white size-4"
+     <div class="h-[30px]">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 500 500"
+        xmlns:bx="https://boxy-svg.com"
+        style="height: 35px; margin: -7px;"
         :class="
           isActive('/points')
-            ? 'fill-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'text-[#687DFD] !important'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
         "
-      />
+      >
+        <!-- Path that takes parent color -->
+        <path
+          d="M 320.815693412 215.16718 Q 339.73 204.247 358.644306588 215.16718 L 478.434914977 284.32832 Q 497.349221565 295.2485 497.349221565 317.08886 L 497.349221565 455.41114 Q 497.349221565 477.2515 478.434914977 488.17168 L 358.644306588 557.33282 Q 339.73 568.253 320.815693412 557.33282 L 201.025085023 488.17168 Q 182.110778435 477.2515 182.110778435 455.41114 L 182.110778435 317.08886 Q 182.110778435 295.2485 201.025085023 284.32832 Z"
+          bx:shape="n-gon 339.73 386.25 182.003 182.003 6 0.12 1@71bbf27b"
+          style="fill: currentColor; stroke: currentColor"
+          transform="matrix(0.500309764879, 0.865846487067, -0.865846487067, 0.500309764879, 388.058405801984, -222.91483813741)"
+        />
+
+        <!-- Path that takes text color -->
+        <path
+          d="M 260.886 128.063 L 285.277 193.204 L 347.12 218.895 L 285.277 244.586 L 260.886 309.727 L 236.495 244.586 L 174.652 218.895 L 236.495 193.204 Z"
+          bx:shape="star 260.886 218.895 86.234 90.832 0.4 4 1@c88c622e"
+          style="fill: inherit; stroke: white; stroke-width: 1"
+        />
+      </svg>
+      </div>
       <span
+        style="margin-top: -5px"
         :class="
           isActive('/points')
-            ? 'text-primary !important'
-            : 'text-surface-700 dark:text-white'
+            ? 'text-[#687DFD] fold-bold font-bold text-sm'
+            : 'text-[#A3A1A5] dark:text-[#A3A1A5] font-bold text-sm'
         "
-        >Points</span
+        >RevPoints</span
       >
     </div>
   </div>
