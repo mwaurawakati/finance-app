@@ -96,7 +96,7 @@ const cardDetails = ref({
   </div>
   <div
     id="nav-bar-bottom"
-    class="bottom-0 fixed w-full h-20 p-0 flex justify-evenly items-center gap-0 bg-white dark:bg-slate-600 z-10"
+    class="bottom-0 fixed w-full h-20 p-0 flex justify-evenly items-center gap-0 bg-white dark:bg-slate-600 z-20"
   >
     <div
       class="flex flex-col p-2 justify-center items-center"
@@ -785,7 +785,7 @@ button {
   color: #0f0f0f;
   background-color: #ffffff;
   transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  /*box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);*/
 }
 
 button {

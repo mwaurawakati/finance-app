@@ -147,25 +147,40 @@
           <div class="flex flex-col">
             <div v-for="(item, index) in slotProps.items" :key="index">
               <div
-                class="flex flex-col sm:flex-row sm:items-center p-6 gap-4"
+                class="flex flex-col sm:flex-row sm:items-center p-2 gap-4"
                 :class="{
-                  'border-t border-surface-200 dark:border-surface-700':
-                    index !== 0,
+                  'border-none': index !== 0,
                 }"
               >
                 <div
                   class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6"
                 >
-                  <div class="flex flex-row items-center gap-2">
-                    <img
-                      :src="item.Image"
-                      size="large"
-                      shape="circle"
-                      class="!w-[70px] !h-[70px] rounded-full"
-                    />
-                    <div class="grow">
-                      <div class="text-lg font-medium mt-2 grow">
-                        {{ formatTransactiontext(item) }}
+                  <div class="flex flex-row items-center gap-0 p-0">
+                    <div class="!w-[25%] !h-[70px] rounded-full">
+                      <div class="w-[50px] bg-white rounded-full">
+                        <img
+                          :src="item.Image"
+                          size="large"
+                          shape="circle"
+                          class="!w-[50px] !h-[50px] rounded-full"
+                        />
+                        <div
+                          v-show="item.Type == 'Add'"
+                          class="float-right mt-[-20px] mr-[-10px] rounded-full bg-blue-600 z-10 relative border border-black border-4 w-[30px] flex items-center justify-center h-[30px]"
+                        >
+                          <font-awesome-icon
+                            :icon="['fas', 'plus']"
+                            class="text-surface-700 dark:text-grey-500"
+                            size="sm"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="w-[55%]">
+                      <div class="text-sm font-medium mt-2 grow text-balance">
+                        <p>
+                          {{ formatTransactiontext(item) }}
+                        </p>
                       </div>
                       <span
                         class="font-medium text-surface-500 dark:text-surface-400 text-sm"
@@ -173,21 +188,15 @@
                       >
                     </div>
                     <div
-                      class="p-1 h-full flex item-center justify-center"
-                      style="border-radius: 30px"
+                      class="p-1 h-full flex item-center justify-center flex-col"
+                      style="border-radius: 30px; width: 20%"
                     >
-                      <div
-                        class="flex items-center gap-2 justify-center py-1 px-2"
-                        style="
-                          border-radius: 30px;
-                          box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04),
-                            0px 1px 2px 0px rgba(0, 0, 0, 0.06);
-                        "
-                      >
-                        <span class="dark:text-white font-bold text-lg">
-                          {{ formatCurrency(item) }}
-                        </span>
-                      </div>
+                      <span class="dark:text-white text-lg h-1/2">
+                        {{ formatCurrency(item) }}
+                      </span>
+                      <span class="h-1/2">{{
+                        item.Fee > 0 ? `${item.Fee}Ft` : ""
+                      }}</span>
                     </div>
                   </div>
                 </div>
@@ -205,29 +214,36 @@
     position="full"
     style="height: 90%"
     :dt="{}"
+    class="dark:!bg-black !border-none"
   >
     <template #container>
-      <div class="p-4">
+      <div class="p-4 pb-0">
         <Button
           class="!float-left !bg-inherit !border-none dark:!text-white !border-transparent"
           size="large"
           @click="openAddMoney = false"
         >
           <template #icon>
-            <i class="pi pi-arrow-left" style="font-size: 1.5rem" />
+            <i class="pi pi-arrow-left" style="font-size: 1.2rem" />
           </template>
         </Button>
         <BiShieldQuarter
-          color="blue"
+          color="#697bfe"
           size="30"
           style="transform: scaleX(-1); float: right"
         />
       </div>
 
-      <div class="flex flex-col h-full p-4">
-        <h1 class="w-full text-left">Add money</h1>
+      <div class="flex flex-col h-full px-4">
+        <h3
+          class="w-full text-left font-black text-3xl"
+          style="font-family: system-ui"
+        >
+          Add money
+        </h3>
         <div class="grow flex flex-col gap-3">
           <!--card type-->
+          <!--
           <Select
             v-model="selectedCard"
             :options="cardStore.cards"
@@ -244,34 +260,47 @@
                 class="!bg-[#0a3690] !border-none"
               />
             </template>
-            <template #value="slotProps">
-              <div v-if="slotProps.value" class="flex items-center">
-                <img
-                  :alt="slotProps.value"
-                  :src="`${slotProps.value.Type.toLowerCase()}.png`"
-                  :class="`mr-6 rounded-full`"
-                  style="width: 40px"
-                />
-                <div class="flex flex-col">
-                  <span class="font-extrabold uppercase">{{
-                    slotProps.value.BankName
-                  }}</span>
-                  <div class="flex items-center justify-cente">
-                    <span class="uppercase mr-1">{{
-                      slotProps.value.Type
-                    }}</span>
-                    <div class="flex items-center justify-center h-full">
-                      <span>&#183;</span>
-                      <span>&#183;</span>
-                    </div>
-                    <span>{{ slotProps.value.CardNumber.slice(-4) }}</span>
+            <template #value="slotProps"-->
+          <div
+            class="w-full md:w-56 !rounded-xl !border-none !p-4 dark:!bg-neutral-900 flex"
+          >
+            <div v-if="selectedCard" class="flex items-center grow">
+              <img
+                :alt="selectedCard.Name"
+                :src="`${selectedCard.Type.toLowerCase()}.png`"
+                :class="`mr-6 rounded-full bg-white`"
+                style="width: 40px"
+              />
+              <div class="flex flex-col">
+                <span class="font-extrabold uppercase">{{
+                  selectedCard.BankName
+                }}</span>
+                <div class="flex items-center justify-cente dark:text-gray-400">
+                  <span class="uppercase mr-1">{{ selectedCard.Type }}</span>
+                  <div class="flex items-center justify-center h-full">
+                    <span>&#183;</span>
+                    <span>&#183;</span>
                   </div>
+                  <span>{{ selectedCard.CardNumber.slice(-4) }}</span>
                 </div>
               </div>
-              <span v-else>
+            </div>
+            <!--Button
+                label="Change"
+                rounded
+                class="!bg-slate-900 !border-none !float-right"
+              /-->
+            <p
+              style="font-family: system-ui"
+              class="!bg-[#1c1c34] !border-none !float-right rounded text-[#697bfe] font-bold p-0 px-4 rounded-3xl flex items-center"
+            >
+              Change
+            </p>
+          </div>
+          <!--span v-else>
                 {{ slotProps.placeholder }}
-              </span>
-            </template>
+              </span-->
+          <!--/template>
             <template #option="slotProps">
               <div class="flex items-center">
                 <img
@@ -290,7 +319,7 @@
                 </div>
               </div>
             </template>
-          </Select>
+          </Select-->
           <div
             class="w-full my-[-10px] flex justify-center z-10"
             style="margin-top: -25px; margin-bottom: -25px"
@@ -302,7 +331,7 @@
             </Button>
           </div>
           <div
-            class="flex gap-2 p-4 !rounded-xl !border-none !p-4 dark:!bg-[#3f6dc9]"
+            class="flex gap-2 p-4 !rounded-xl !border-none !p-4 dark:!bg-neutral-800"
           >
             <div class="flex flex-col w-1/2">
               <Select
@@ -347,14 +376,26 @@
               </Select>
               <div class="ml-2 mt-4 opacity-60">
                 <span
-
                   >Balance: {{ selectedAccount.Balance.toFixed(2) }}
                   {{ getSymbolFromCurrency(selectedAccount.Name) }}</span
                 >
               </div>
             </div>
-            <div class="w-1/2 flex flex-col">
-              <InputNumber unstyled :focused="openAddMoney" class="!border-none !bg-transparent font-black text-lg w-auto in" v-model="addValue" placeHolder="Add value" :suffix="getSymbolFromCurrency(selectedAccount.Name)"/>
+            <div v-focustrap class="w-1/2 flex flex-col">
+              <InputNumber
+                unstyled
+                autofocus
+                :focused="openAddMoney"
+                class="!border-none !bg-transparent font-black text-xl w-auto in !shadow-none"
+                v-model="addValue"
+                placeHolder="Add value"
+                :suffix="getSymbolFromCurrency(selectedAccount.Name)"
+                style="
+                  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+                    'Helvetica Neue', sans-serif;
+                "
+              />
               <span class="text-end opacity-65 mt-3 mr-8">No fee</span>
             </div>
           </div>
@@ -363,7 +404,7 @@
         <div class="flex justify-end gap-2 mt-4">
           <Button
             type="button"
-            class="!border-none !bg-[#2ea9ff]"
+            class="!border-none !bg-[#697bfe] !p-4 !text-white !font-extrabold"
             label="Add money securely"
             @click="saveAddMoney"
             fluid
@@ -373,9 +414,29 @@
       </div>
     </template>
   </Drawer>
+  <Drawer
+    v-model:visible="processing"
+    header="Bottom Drawer"
+    position="bottom"
+    style="height: auto; margin: 30px; border-radius: 50px"
+    class="!rounded-5xl"
+  >
+    <template #container>
+      <div
+        class="p-8 flex flex-col items-center justify-center bg-neutral-700 rounded-3xl"
+      >
+        <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
+        <MdAccessTime color="grey" size="40" />
+        <p class="font-black text-xl text-center mt-4">
+          Your transaction is being processed
+        </p>
+      </div>
+    </template>
+  </Drawer>
 </template>
 
 <script setup lang="ts">
+import { MdAccessTime } from "vue-icons-plus/md";
 import { ref, watch, toRefs } from "vue";
 import { useCardStore } from "../store/cards";
 import { useAccountStore } from "../store/accounts";
@@ -388,6 +449,7 @@ import getSymbolFromCurrency from "currency-symbol-map";
 import { useScroll } from "@vueuse/core";
 import { BiShieldQuarter } from "vue-icons-plus/bi";
 
+const processing = ref(false);
 const el = ref<HTMLElement | null>(null);
 const { isScrolling, arrivedState, directions } = useScroll(el);
 const { bottom } = toRefs(arrivedState);
@@ -414,7 +476,7 @@ const cardStore = useCardStore();
 const accountStore = useAccountStore();
 const transactionStore = useTransactionStore();
 const openAddMoney = ref(false);
-const addValue = ref(10.05);
+const addValue = ref(10);
 const selectedAccount = ref(
   accountStore.defaultAccounts[accountStore.activeAccountIndex]
 );
@@ -429,17 +491,22 @@ const onSlideChange = (e: any) => {
 };
 
 function saveAddMoney() {
-  console.log("Accpount Details:", selectedAccount);
+  console.log("Account Details:", selectedAccount);
   console.log(addValue.value);
-  openAddMoney.value = false;
-  //selectedAccount.value.Balance += addValue.value;
-  accountStore.updateAccount(
-    selectedAccount.value.ID,
-    addValue.value,
-    selectedCard.value
-  );
-  //cardDetails.value.ID = cardStore.cards.length;
-  //cardStore.cards.push(cardDetails.value);
+
+  // Set processing to true
+  processing.value = true;
+  // Simulate processing delay of 5 seconds
+  setTimeout(() => {
+    processing.value = false; // Reset processing after 5 seconds
+    openAddMoney.value = false;
+    accountStore.updateAccount(
+      selectedAccount.value.ID,
+      addValue.value,
+      selectedCard.value
+    );
+  }, 5000);
+  // Perform the operations
 }
 
 function formatTransactiontext(ts: Transaction) {

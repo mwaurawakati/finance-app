@@ -28,7 +28,7 @@ export const useCardStore = defineStore("card", {
         CardNumber: "4783932500451082",
         Name: "Mwaura Wakati",
         CVV: "123",
-        Type: CardType.Visa,
+        Type: CardType.Mastercard,
         ExpiryDay: "12/24",
         ShowCVV: false,
         BankName: "Equity Bank"
@@ -40,7 +40,7 @@ export const useCardStore = defineStore("card", {
           CardNumber: "4783932500451082",
           Name: "Mwaura Wakati",
           CVV: "123",
-          Type: CardType.Visa,
+          Type: CardType.Mastercard,
           ExpiryDay: "12/24",
           ShowCVV: false
         },

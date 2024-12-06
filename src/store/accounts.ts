@@ -118,7 +118,7 @@ export const useAccountStore = defineStore("account", {
           Type: TransactionType.Add,
           Category: TransactionCategory.Other,
           Status: TransactionStatus.Completed,
-          Image: "",
+          Image: `${card.Type.toLocaleLowerCase()}.png`,
           Fee: 0,
         });
         transactionStore.transactions.sort(
