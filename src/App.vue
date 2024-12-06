@@ -4,7 +4,7 @@ import { ref, onMounted } from "vue";
 import { SparklesIcon } from "@heroicons/vue/16/solid";
 import { useRouter, useRoute } from "vue-router";
 import { useAppearanceStore } from "./store/appearance";
-import { useCardStore, CardType } from "./store/cards";
+import { useCardStore } from "./store/cards";
 import { RevolutIcon } from "vue3-simple-icons";
 import { ChartNoAxesCombined } from "lucide-vue-next";
 const route = useRoute();
@@ -13,17 +13,12 @@ const appearanceStore = useAppearanceStore();
 const cardStore = useCardStore();
 const openAccount = ref(false);
 const openManageCard = ref(false);
-const openAddCard = ref(false);
-const cardTypes = ref(["Visa", "MasterCard", "Google", "Apple"]);
+
+
 function isActive(path: string) {
   return route.path === path;
 }
-function saveCardDetails() {
-  console.log("Card Details:", cardDetails.value);
-  openAddCard.value = false;
-  cardDetails.value.ID = cardStore.cards.length;
-  cardStore.cards.push(cardDetails.value);
-}
+
 onMounted(async () => {
   //const theme = (await get("theme")) as string;
   //if (theme) {
@@ -37,16 +32,7 @@ onMounted(async () => {
     appearanceStore.changeTheme("system");
   });
 });
-const cardDetails = ref({
-  Name: "",
-  CardNumber: "",
-  ExpiryDay: "",
-  CVV: "",
-  ID: 0,
-  Type: CardType.Visa,
-  ShowCVV: false,
-  BankName: "",
-});
+
 </script>
 
 <template>
@@ -96,7 +82,7 @@ const cardDetails = ref({
   </div>
   <div
     id="nav-bar-bottom"
-    class="bottom-0 fixed w-full h-20 p-0 flex justify-evenly items-center gap-0 bg-white dark:bg-slate-600 z-20"
+    class="bottom-0 fixed w-full h-20 p-0 flex justify-evenly items-center gap-0 bg-white dark:bg-[#1f1f21] z-20"
   >
     <div
       class="flex flex-col p-2 justify-center items-center"
@@ -516,7 +502,7 @@ const cardDetails = ref({
     style="height: auto"
   >
     <div class="flex flex-col justify-center">
-      <Button label="Add Card" @click="openAddCard = true" />
+      <Button label="Add Card" @click="" />
 
       <div class="grow overflow-scroll">
         <DataView :value="cardStore.cards" dataKey="CVV" class="">
@@ -588,125 +574,7 @@ const cardDetails = ref({
     </div>
   </Drawer>
 
-  <!--Add Card Dialog-->
-  <Dialog
-    v-model:visible="openAddCard"
-    modal
-    header="Add Card"
-    :style="{ width: '90%' }"
-  >
-    <span class="text-surface-500 dark:text-surface-400 block mb-8">
-      Please enter your card details to proceed.
-    </span>
-    <div class="flex flex-col gap-4">
-      <!-- Cardholder Name -->
-      <div class="flex items-center gap-4">
-        <label for="cardholder" class="font-semibold w-24">Cardholder</label>
-        <InputText
-          id="cardholder"
-          class="flex-auto"
-          v-model="cardDetails.Name"
-          placeholder="Name on Card"
-          autocomplete="off"
-        />
-      </div>
-
-      <!-- Bank Name -->
-      <div class="flex items-center gap-4">
-        <label for="bankname" class="font-semibold w-24">Bank Name</label>
-        <InputText
-          id="bankname"
-          class="flex-auto"
-          v-model="cardDetails.BankName"
-          placeholder="Name of the bank"
-          autocomplete="off"
-        />
-      </div>
-      <!-- Card Number -->
-      <div class="flex items-center gap-4">
-        <label for="cardNumber" class="font-semibold w-24">Card Number</label>
-        <InputMask
-          name="cardNumber"
-          mask="9999 9999 9999 9999"
-          placeholder="1234 5678 1234 5978"
-          v-model="cardDetails.CardNumber"
-          fluid
-        />
-      </div>
-
-      <!--card type-->
-      <Select
-        v-model="cardDetails.Type"
-        :options="cardTypes"
-        filter
-        optionLabel="name"
-        placeholder="Select a Country"
-        class="w-full md:w-56"
-      >
-        <template #value="slotProps">
-          <div v-if="slotProps.value" class="flex items-center">
-            <img
-              :alt="slotProps.value"
-              :src="`${slotProps.value.toLowerCase()}.png`"
-              :class="`mr-2`"
-              style="width: 18px"
-            />
-            <div>{{ slotProps.value }}</div>
-          </div>
-          <span v-else>
-            {{ slotProps.placeholder }}
-          </span>
-        </template>
-        <template #option="slotProps">
-          <div class="flex items-center">
-            <img
-              :alt="slotProps.option"
-              :src="`${slotProps.option.toLowerCase()}.png`"
-              :class="`mr-2`"
-              style="width: 18px"
-            />
-            <div>{{ slotProps.option }}</div>
-          </div>
-        </template>
-      </Select>
-
-      <!-- Expiration Date and CVV -->
-      <div class="flex gap-4">
-        <div class="flex items-center gap-4 flex-1">
-          <label for="expiryDate" class="font-semibold w-24">Expiry</label>
-          <InputMask
-            name="expiryDate"
-            mask="99/99"
-            placeholder="XX/XX"
-            fluid
-            id="expiryDate"
-            v-model="cardDetails.ExpiryDay"
-          />
-        </div>
-        <div class="flex items-center gap-4 flex-1">
-          <label for="cvv" class="font-semibold w-24">CVV</label>
-          <InputMask
-            name="cvv"
-            mask="999"
-            placeholder="XXX"
-            fluid
-            id="expiryDate"
-            v-model="cardDetails.CVV"
-          />
-        </div>
-      </div>
-    </div>
-    <!-- Actions -->
-    <div class="flex justify-end gap-2 mt-4">
-      <Button
-        type="button"
-        label="Cancel"
-        severity="secondary"
-        @click="openAddCard = false"
-      ></Button>
-      <Button type="button" label="Save" @click="saveCardDetails"></Button>
-    </div>
-  </Dialog>
+  
 </template>
 
 <style scoped>

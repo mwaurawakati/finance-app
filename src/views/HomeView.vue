@@ -166,7 +166,7 @@
                         />
                         <div
                           v-show="item.Type == 'Add'"
-                          class="float-right mt-[-20px] mr-[-10px] rounded-full bg-blue-600 z-10 relative border border-black border-4 w-[30px] flex items-center justify-center h-[30px]"
+                          class="float-right mt-[-20px] mr-[-10px] rounded-full bg-[#697afe] z-10 relative border border-black border-4 w-[30px] flex items-center justify-center h-[30px]"
                         >
                           <font-awesome-icon
                             :icon="['fas', 'plus']"
@@ -242,25 +242,6 @@
           Add money
         </h3>
         <div class="grow flex flex-col gap-3">
-          <!--card type-->
-          <!--
-          <Select
-            v-model="selectedCard"
-            :options="cardStore.cards"
-            filter
-            optionLabel="name"
-            placeholder="Select a Country"
-            class="w-full md:w-56 !rounded-xl !border-none !p-4 dark:!bg-[#1a2746]"
-            :dt="selectDT"
-          >
-            <template #dropdownicon>
-              <Button
-                label="Change"
-                rounded
-                class="!bg-[#0a3690] !border-none"
-              />
-            </template>
-            <template #value="slotProps"-->
           <div
             class="w-full md:w-56 !rounded-xl !border-none !p-4 dark:!bg-neutral-900 flex"
           >
@@ -285,41 +266,14 @@
                 </div>
               </div>
             </div>
-            <!--Button
-                label="Change"
-                rounded
-                class="!bg-slate-900 !border-none !float-right"
-              /-->
             <p
+              @click="openChangeCard = true"
               style="font-family: system-ui"
               class="!bg-[#1c1c34] !border-none !float-right rounded text-[#697bfe] font-bold p-0 px-4 rounded-3xl flex items-center"
             >
               Change
             </p>
           </div>
-          <!--span v-else>
-                {{ slotProps.placeholder }}
-              </span-->
-          <!--/template>
-            <template #option="slotProps">
-              <div class="flex items-center">
-                <img
-                  :alt="slotProps.option.Name"
-                  :src="`${slotProps.option.Type.toLowerCase()}.png`"
-                  :class="`mr-2`"
-                  style="width: 18px"
-                />
-                <div class="flex flex-col">
-                  <span>{{ slotProps.option.BankName }}</span>
-                  <span
-                    >{{ slotProps.option.Type }}***{{
-                      slotProps.option.CardNumber.slice(-4)
-                    }}</span
-                  >
-                </div>
-              </div>
-            </template>
-          </Select-->
           <div
             class="w-full my-[-10px] flex justify-center z-10"
             style="margin-top: -25px; margin-bottom: -25px"
@@ -414,6 +368,8 @@
       </div>
     </template>
   </Drawer>
+
+  <!--processing drawer-->
   <Drawer
     v-model:visible="processing"
     header="Bottom Drawer"
@@ -433,12 +389,226 @@
       </div>
     </template>
   </Drawer>
+
+  <!--changer card drawer drawer-->
+  <Drawer
+    v-model:visible="openChangeCard"
+    header="Bottom Drawer"
+    position="bottom"
+    style="height: 97%"
+    class="!rounded-5xl"
+  >
+    <template #container>
+      <div class="p-4 pb-0">
+        <Button
+          class="!float-left !bg-inherit !border-none dark:!text-white !border-transparent"
+          size="large"
+          @click="openChangeCard = false"
+        >
+          <template #icon>
+            <i class="pi pi-times" style="font-size: 1.2rem" />
+          </template>
+        </Button>
+      </div>
+
+      <div class="flex flex-col h-full px-4">
+        <h3
+          class="w-full text-left font-black text-3xl"
+          style="font-family: system-ui"
+        >
+          How to add money
+        </h3>
+        <div class="grow flex flex-col gap-3">
+          <div class="flex justify-between">
+            <span class="font-bold">Cards</span>
+            <span @click="openAddCard = true" class="text-sky-600">Add card securely</span>
+          </div>
+          <div
+            class="w-full md:w-56 !rounded-xl !border-none !p-4 dark:!bg-neutral-800 flex"
+          >
+            <div v-if="selectedCard" class="flex items-center grow">
+              <img
+                :alt="selectedCard.Name"
+                :src="`${selectedCard.Type.toLowerCase()}.png`"
+                :class="`mr-6 rounded-full bg-white`"
+                style="width: 40px"
+              />
+              <div class="flex flex-col">
+                <span class="font-extrabold uppercase">{{
+                  selectedCard.BankName
+                }}</span>
+                <div class="flex items-center justify-cente dark:text-gray-400">
+                  <span class="uppercase mr-1">{{ selectedCard.Type }}</span>
+                  <div class="flex items-center justify-center h-full">
+                    <span>&#183;</span>
+                    <span>&#183;</span>
+                  </div>
+                  <span>{{ selectedCard.CardNumber.slice(-4) }}</span>
+                </div>
+              </div>
+            </div>
+            <p
+              style="font-family: system-ui"
+              class="!bg-inherit !border-none !float-right rounded text-[#697bfe] font-bold p-0 px-4 rounded-3xl flex items-center"
+            >
+              <i class="pi pi-info-circle" style="font-size: 1.2rem" />
+            </p>
+          </div>
+
+          <div>
+            <p class="font-bold">Others</p>
+            <div class="bg-neutral-800 rounded gap-4 flex flex-col p-2 rounded">
+              <div class="flex justify-center items-center">
+                <div class="bg-slate-700 rounded-full w-[20%] h-[30px] flex items-center justify-center">
+                  <i
+                    class="pi pi-arrow-right-arrow-left"
+                    style="font-size: 1.2rem"
+                  />
+                </div>
+                <div class="w-[80%] ml-2 p-2 flex flex-col">
+                  <span class="font-semibold">Regular bank transfer</span>
+                  <span
+                    >View account details to make a transfer from your other
+                    bank</span
+                  >
+                </div>
+              </div>
+              <div class="flex p-2 gap-2">
+                <img src="/applepay2.png" class="w-[60px] h-[40px] rounded"/>
+                <span class="flex items-center font-bold">Apple Pay</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+  </Drawer>
+
+  <!--Add Card Dialog-->
+  <Dialog
+    v-model:visible="openAddCard"
+    modal
+    header="Add Card"
+    :style="{ width: '90%' }"
+  >
+    <span class="text-surface-500 dark:text-surface-400 block mb-8">
+      Please enter your card details to proceed.
+    </span>
+    <div class="flex flex-col gap-4">
+      <!-- Cardholder Name -->
+      <div class="flex items-center gap-4">
+        <label for="cardholder" class="font-semibold w-24">Cardholder</label>
+        <InputText
+          id="cardholder"
+          class="flex-auto"
+          v-model="cardDetails.Name"
+          placeholder="Name on Card"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Bank Name -->
+      <div class="flex items-center gap-4">
+        <label for="bankname" class="font-semibold w-24">Bank Name</label>
+        <InputText
+          id="bankname"
+          class="flex-auto"
+          v-model="cardDetails.BankName"
+          placeholder="Name of the bank"
+          autocomplete="off"
+        />
+      </div>
+      <!-- Card Number -->
+      <div class="flex items-center gap-4">
+        <label for="cardNumber" class="font-semibold w-24">Card Number</label>
+        <InputMask
+          name="cardNumber"
+          mask="9999 9999 9999 9999"
+          placeholder="1234 5678 1234 5978"
+          v-model="cardDetails.CardNumber"
+          fluid
+        />
+      </div>
+
+      <!--card type-->
+      <Select
+        v-model="cardDetails.Type"
+        :options="cardTypes"
+        filter
+        optionLabel="name"
+        placeholder="Select a Country"
+        class="w-full md:w-56"
+      >
+        <template #value="slotProps">
+          <div v-if="slotProps.value" class="flex items-center">
+            <img
+              :alt="slotProps.value"
+              :src="`${slotProps.value.toLowerCase()}.png`"
+              :class="`mr-2`"
+              style="width: 18px"
+            />
+            <div>{{ slotProps.value }}</div>
+          </div>
+          <span v-else>
+            {{ slotProps.placeholder }}
+          </span>
+        </template>
+        <template #option="slotProps">
+          <div class="flex items-center">
+            <img
+              :alt="slotProps.option"
+              :src="`${slotProps.option.toLowerCase()}.png`"
+              :class="`mr-2`"
+              style="width: 18px"
+            />
+            <div>{{ slotProps.option }}</div>
+          </div>
+        </template>
+      </Select>
+
+      <!-- Expiration Date and CVV -->
+      <div class="flex gap-4">
+        <div class="flex items-center gap-4 flex-1">
+          <label for="expiryDate" class="font-semibold w-24">Expiry</label>
+          <InputMask
+            name="expiryDate"
+            mask="99/99"
+            placeholder="XX/XX"
+            fluid
+            id="expiryDate"
+            v-model="cardDetails.ExpiryDay"
+          />
+        </div>
+        <div class="flex items-center gap-4 flex-1">
+          <label for="cvv" class="font-semibold w-24">CVV</label>
+          <InputMask
+            name="cvv"
+            mask="999"
+            placeholder="XXX"
+            fluid
+            id="expiryDate"
+            v-model="cardDetails.CVV"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Actions -->
+    <div class="flex justify-end gap-2 mt-4">
+      <Button
+        type="button"
+        label="Cancel"
+        severity="secondary"
+        @click="openAddCard = false"
+      ></Button>
+      <Button type="button" label="Save" @click="saveCardDetails"></Button>
+    </div>
+  </Dialog>
 </template>
 
 <script setup lang="ts">
 import { MdAccessTime } from "vue-icons-plus/md";
 import { ref, watch, toRefs } from "vue";
-import { useCardStore } from "../store/cards";
+import { useCardStore, CardType } from "../store/cards";
 import { useAccountStore } from "../store/accounts";
 import { useTransactionStore, Transaction } from "../store/transactions";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -471,11 +641,33 @@ watch(isScrolling, (_newScrolling, _oldScrolling) => {
     cont.style.marginBottom = "0px";
   }
 });
+
+
+function saveCardDetails() {
+  console.log("Card Details:", cardDetails.value);
+  openAddCard.value = false;
+  cardDetails.value.ID = cardStore.cards.length;
+  cardStore.cards.push(cardDetails.value);
+}
+
+const cardDetails = ref({
+  Name: "",
+  CardNumber: "",
+  ExpiryDay: "",
+  CVV: "",
+  ID: 0,
+  Type: CardType.Visa,
+  ShowCVV: false,
+  BankName: "",
+});
+const cardTypes = ref(["Visa", "MasterCard", "Google", "Apple"]);
+const openAddCard = ref(false);
 const modules = ref([Pagination]);
 const cardStore = useCardStore();
 const accountStore = useAccountStore();
 const transactionStore = useTransactionStore();
 const openAddMoney = ref(false);
+const openChangeCard = ref(false);
 const addValue = ref(10);
 const selectedAccount = ref(
   accountStore.defaultAccounts[accountStore.activeAccountIndex]
