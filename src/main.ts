@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { createPinia } from "pinia";
 
 import FocusTrap from "primevue/focustrap";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 //import process from "process";
 
@@ -59,4 +61,5 @@ const pinia = createPinia();
 app.use(pinia);
 app.directive("focustrap", FocusTrap);
 app.component("font-awesome-icon", FontAwesomeIcon);
+app.use(AOS)
 app.mount("#app");

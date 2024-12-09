@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-//import { get } from "./app/store";
+import {
+  isGranted,
+  askPermission,
+  sendNotificationPanda,
+} from "./app/notifications";
 import { SparklesIcon } from "@heroicons/vue/16/solid";
 import { useRouter, useRoute } from "vue-router";
 import { useAppearanceStore } from "./store/appearance";
 import { useCardStore } from "./store/cards";
 import { RevolutIcon } from "vue3-simple-icons";
 import { ChartNoAxesCombined } from "lucide-vue-next";
+import { ask } from "@tauri-apps/plugin-dialog";
+import { isTauri } from "@tauri-apps/api/core";
 const route = useRoute();
 const router = useRouter();
 const appearanceStore = useAppearanceStore();
 const cardStore = useCardStore();
 const openAccount = ref(false);
 const openManageCard = ref(false);
-
 
 function isActive(path: string) {
   return route.path === path;
@@ -31,8 +36,60 @@ onMounted(async () => {
   mediaQuery.addEventListener("change", (_event) => {
     appearanceStore.changeTheme("system");
   });
-});
 
+  let isPermissionGranted = await isGranted();
+  if (isPermissionGranted) {
+    sendNotificationPanda({
+      title: "Deposit Successful",
+      body: "Your deposit has been processed!",
+      summary: "Desposit successful.",
+      icon: "icon",
+      autoCancel: false,
+      visibility: 1,
+      actionTypeId: "t2",
+      largeIcon: "icon",
+      channelId: "testchannel",
+      largeBody:
+        "We have received 1000 TMT that has been deposited to your account. We have received 1000 TMT that has been deposited to your account.We have received 1000 TMT that has been deposited to your account. We have received 1000 TMT that has been deposited to your account. We have received 1000 TMT that has been deposited to your account. We have received 1000 TMT that has been deposited to your account.",
+      attachments: [
+        {
+          id: "a11",
+          url: "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
+        },
+      ],
+    });
+  } else {
+    //if (!isPermissionGranted) {
+    let answer: boolean;
+    if (isTauri()) {
+      answer = await ask(
+        "Revolut would like to send you notifications. Would you like to receive notifications?",
+        {
+          title: "Revolut",
+          kind: "info",
+        }
+      );
+    } else {
+      answer = confirm("Revolut would like to send you notifications. Would you like to receive notifications?");
+    }
+    console.log(answer);
+    if (answer) {
+      let granted = await askPermission();
+      if (granted) {
+        sendNotificationPanda({
+          title: "Test Notification",
+          body: "Tauri is awesome!",
+          summary: "This is a test notification",
+          icon: "icon",
+          iconColor: "white",
+          autoCancel: true,
+          largeIcon: "icon.png",
+        });
+      }
+    }
+    //}
+  }
+});
 </script>
 
 <template>
@@ -195,33 +252,33 @@ onMounted(async () => {
       }"
       @click="router.push('/points')"
     >
-     <div class="h-[30px]">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 500 500"
-        xmlns:bx="https://boxy-svg.com"
-        style="height: 35px; margin: -7px;"
-        :class="
-          isActive('/points')
-            ? 'text-[#687DFD] !important'
-            : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
-        "
-      >
-        <!-- Path that takes parent color -->
-        <path
-          d="M 320.815693412 215.16718 Q 339.73 204.247 358.644306588 215.16718 L 478.434914977 284.32832 Q 497.349221565 295.2485 497.349221565 317.08886 L 497.349221565 455.41114 Q 497.349221565 477.2515 478.434914977 488.17168 L 358.644306588 557.33282 Q 339.73 568.253 320.815693412 557.33282 L 201.025085023 488.17168 Q 182.110778435 477.2515 182.110778435 455.41114 L 182.110778435 317.08886 Q 182.110778435 295.2485 201.025085023 284.32832 Z"
-          bx:shape="n-gon 339.73 386.25 182.003 182.003 6 0.12 1@71bbf27b"
-          style="fill: currentColor; stroke: currentColor"
-          transform="matrix(0.500309764879, 0.865846487067, -0.865846487067, 0.500309764879, 388.058405801984, -222.91483813741)"
-        />
+      <div class="h-[30px]">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 500 500"
+          xmlns:bx="https://boxy-svg.com"
+          style="height: 35px; margin: -7px"
+          :class="
+            isActive('/points')
+              ? 'text-[#687DFD] !important'
+              : 'text-[#A3A1A5] dark:text-[#A3A1A5]'
+          "
+        >
+          <!-- Path that takes parent color -->
+          <path
+            d="M 320.815693412 215.16718 Q 339.73 204.247 358.644306588 215.16718 L 478.434914977 284.32832 Q 497.349221565 295.2485 497.349221565 317.08886 L 497.349221565 455.41114 Q 497.349221565 477.2515 478.434914977 488.17168 L 358.644306588 557.33282 Q 339.73 568.253 320.815693412 557.33282 L 201.025085023 488.17168 Q 182.110778435 477.2515 182.110778435 455.41114 L 182.110778435 317.08886 Q 182.110778435 295.2485 201.025085023 284.32832 Z"
+            bx:shape="n-gon 339.73 386.25 182.003 182.003 6 0.12 1@71bbf27b"
+            style="fill: currentColor; stroke: currentColor"
+            transform="matrix(0.500309764879, 0.865846487067, -0.865846487067, 0.500309764879, 388.058405801984, -222.91483813741)"
+          />
 
-        <!-- Path that takes text color -->
-        <path
-          d="M 260.886 128.063 L 285.277 193.204 L 347.12 218.895 L 285.277 244.586 L 260.886 309.727 L 236.495 244.586 L 174.652 218.895 L 236.495 193.204 Z"
-          bx:shape="star 260.886 218.895 86.234 90.832 0.4 4 1@c88c622e"
-          style="fill: inherit; stroke: white; stroke-width: 1"
-        />
-      </svg>
+          <!-- Path that takes text color -->
+          <path
+            d="M 260.886 128.063 L 285.277 193.204 L 347.12 218.895 L 285.277 244.586 L 260.886 309.727 L 236.495 244.586 L 174.652 218.895 L 236.495 193.204 Z"
+            bx:shape="star 260.886 218.895 86.234 90.832 0.4 4 1@c88c622e"
+            style="fill: inherit; stroke: white; stroke-width: 1"
+          />
+        </svg>
       </div>
       <span
         style="margin-top: -5px"
@@ -573,8 +630,6 @@ onMounted(async () => {
       </div>
     </div>
   </Drawer>
-
-  
 </template>
 
 <style scoped>

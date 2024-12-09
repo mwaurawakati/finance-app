@@ -6,7 +6,7 @@ import {
   TransactionStatus,
 } from "./transactions";
 import { Card } from "./cards";
-
+import { sendNotificationPanda } from "../app/notifications";
 //import { set } from "../app/store";
 
 interface Account {
@@ -124,6 +124,15 @@ export const useAccountStore = defineStore("account", {
         transactionStore.transactions.sort(
           (a, b) => b.Date.getTime() - a.Date.getTime()
         );
+        sendNotificationPanda({
+          title: "New Card Transaction",
+          body: `You just paid ${account.Name} ${amount} to Revolut***${card.CardNumber.slice(-4)}*.`,
+          summary: `You just paid ${account.Name} ${amount} to Revolut***${card.CardNumber.slice(-4)}*.`,
+          icon: "icon",
+          iconColor: "white",
+          autoCancel: true,
+          largeIcon: "icon.png",
+        });
       } else {
         console.error(`Account with ID ${id} not found`);
       }

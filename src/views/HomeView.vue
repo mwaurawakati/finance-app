@@ -47,19 +47,24 @@
                   {{ item.Name }}
                 </p>
               </div>
-              <span
-                style="font-family: system-ui"
-                class="font-black text-surface-700 text-6xl dark:text-white w-full text-center flex justify-center"
-              >
-                {{ Math.floor(item.Balance) }}
-                <span class="text-xl flex items-end">,</span>
+              <Transition name="slide-fade" mode="out-in" :duration="550">
                 <span
-                  class="align-baseline inline-block flex items-end text-2xl"
+                  :key="item.Balance"
+                  data-aos="fade-up"
+                  data-aos-anchor-placement="center-center"
+                  style="font-family: system-ui"
+                  class="font-black text-surface-700 text-6xl dark:text-white w-full text-center flex justify-center"
                 >
-                  {{ item.Balance.toFixed(2).toString().split(".")[1] || "" }}
-                  {{ getSymbolFromCurrency(item.Name) }}
+                  {{ Math.floor(item.Balance) }}
+                  <span class="text-xl flex items-end">,</span>
+                  <span
+                    class="align-baseline inline-block flex items-end text-2xl"
+                  >
+                    {{ item.Balance.toFixed(2).toString().split(".")[1] || "" }}
+                    {{ getSymbolFromCurrency(item.Name) }}
+                  </span>
                 </span>
-              </span>
+              </Transition>
             </div>
             <Button
               label="Accounts"
@@ -156,7 +161,7 @@
                   class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6"
                 >
                   <div class="flex flex-row items-center gap-0 p-0">
-                    <div class="!w-[25%] !h-[70px] rounded-full">
+                    <div class="!w-[20%] !h-[70px] rounded-full">
                       <div class="w-[50px] bg-white rounded-full">
                         <img
                           :src="item.Image"
@@ -166,7 +171,7 @@
                         />
                         <div
                           v-show="item.Type == 'Add'"
-                          class="float-right mt-[-20px] mr-[-10px] rounded-full bg-[#697afe] z-10 relative border border-black border-4 w-[30px] flex items-center justify-center h-[30px]"
+                          class="float-right mt-[-20px] mr-[-10px] rounded-full bg-[#697afe] z-10 relative border border-neutral-900 border-4 w-[30px] flex items-center justify-center h-[30px]"
                         >
                           <font-awesome-icon
                             :icon="['fas', 'plus']"
@@ -176,8 +181,8 @@
                         </div>
                       </div>
                     </div>
-                    <div class="w-[55%]">
-                      <div class="text-sm font-medium mt-2 grow text-balance">
+                    <div class="w-[60%]">
+                      <div class="text-lg font-extrabold mt-0 grow text-balance">
                         <p>
                           {{ formatTransactiontext(item) }}
                         </p>
@@ -194,7 +199,7 @@
                       <span class="dark:text-white text-lg h-1/2">
                         {{ formatCurrency(item) }}
                       </span>
-                      <span class="h-1/2">{{
+                      <span class="h-[20px] text-gray opacity-60">{{
                         item.Fee > 0 ? `${item.Fee}Ft` : ""
                       }}</span>
                     </div>
@@ -285,7 +290,7 @@
             </Button>
           </div>
           <div
-            class="flex gap-2 p-4 !rounded-xl !border-none !p-4 dark:!bg-neutral-800"
+            class="flex gap-0 !rounded-xl !border-none !p-2 !pr-4 dark:!bg-neutral-800"
           >
             <div class="flex flex-col w-1/2">
               <Select
@@ -328,7 +333,7 @@
                   </div>
                 </template>
               </Select>
-              <div class="ml-2 mt-4 opacity-60">
+              <div class="ml-2 mt-0 opacity-60">
                 <span
                   >Balance: {{ selectedAccount.Balance.toFixed(2) }}
                   {{ getSymbolFromCurrency(selectedAccount.Name) }}</span
@@ -336,34 +341,48 @@
               </div>
             </div>
             <div v-focustrap class="w-1/2 flex flex-col">
-              <InputNumber
-                unstyled
-                autofocus
-                :focused="openAddMoney"
-                class="!border-none !bg-transparent font-black text-xl w-auto in !shadow-none"
-                v-model="addValue"
-                placeHolder="Add value"
-                :suffix="getSymbolFromCurrency(selectedAccount.Name)"
+              <div
+                class="input-container flex !border-none !bg-transparent font-black text-xl w-full justify-end in !shadow-none items-center float-right"
                 style="
                   font-family: system-ui, -apple-system, BlinkMacSystemFont,
                     'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
                     'Helvetica Neue', sans-serif;
                 "
-              />
-              <span class="text-end opacity-65 mt-3 mr-8">No fee</span>
+              >
+                <input
+                  type="number"
+                  v-model="addValue"
+                  class="number-input p-0 text-end"
+                  placeholder="Enter a number"
+                  autofocus
+                />
+                <span class="suffix">{{
+                  getSymbolFromCurrency(selectedAccount.Name)
+                }}</span>
+              </div>
+              <span class="text-end opacity-65 mt-0 mr-0">No fee</span>
             </div>
           </div>
         </div>
+
+        <!--div v-focustrap >
+            <InputText
+                autofocus
+                fluid
+              />
+            
+          </div-->
+
         <!-- Actions -->
         <div class="flex justify-end gap-2 mt-4">
           <Button
             type="button"
             class="!border-none !bg-[#697bfe] !p-4 !text-white !font-extrabold"
-            label="Add money securely"
             @click="saveAddMoney"
             fluid
             rounded
-          ></Button>
+            >Add money securely</Button
+          >
         </div>
       </div>
     </template>
@@ -421,7 +440,9 @@
         <div class="grow flex flex-col gap-3">
           <div class="flex justify-between">
             <span class="font-bold">Cards</span>
-            <span @click="openAddCard = true" class="text-sky-600">Add card securely</span>
+            <span @click="openAddCard = true" class="text-sky-600"
+              >Add card securely</span
+            >
           </div>
           <div
             class="w-full md:w-56 !rounded-xl !border-none !p-4 dark:!bg-neutral-800 flex"
@@ -457,13 +478,17 @@
 
           <div>
             <p class="font-bold">Others</p>
-            <div class="bg-neutral-800 rounded gap-4 flex flex-col p-2 rounded">
+            <div class="bg-neutral-800 rounded-2xl gap-4 flex flex-col p-2 rounded">
               <div class="flex justify-center items-center">
-                <div class="bg-slate-700 rounded-full w-[20%] h-[30px] flex items-center justify-center">
-                  <i
-                    class="pi pi-arrow-right-arrow-left"
-                    style="font-size: 1.2rem"
-                  />
+                <div
+                  class="w-[20%] h-[30px] flex items-center justify-center"
+                >
+                  <div class="h-[40px] w-[40px] rounded-full bg-slate-700 flex items-center justify-center">
+                    <i
+                      class="pi pi-arrow-right-arrow-left"
+                      style="font-size: 1.2rem"
+                    />
+                  </div>
                 </div>
                 <div class="w-[80%] ml-2 p-2 flex flex-col">
                   <span class="font-semibold">Regular bank transfer</span>
@@ -474,7 +499,7 @@
                 </div>
               </div>
               <div class="flex p-2 gap-2">
-                <img src="/applepay2.png" class="w-[60px] h-[40px] rounded"/>
+                <img src="/applepay2.png" class="w-[60px] h-[40px] rounded" />
                 <span class="flex items-center font-bold">Apple Pay</span>
               </div>
             </div>
@@ -485,124 +510,116 @@
   </Drawer>
 
   <!--Add Card Dialog-->
-  <Dialog
+  <Drawer
     v-model:visible="openAddCard"
-    modal
-    header="Add Card"
-    :style="{ width: '90%' }"
+    :style="{ height: '97%', borderRadiusTop: '20px' }"
+    position="bottom"
   >
-    <span class="text-surface-500 dark:text-surface-400 block mb-8">
-      Please enter your card details to proceed.
-    </span>
-    <div class="flex flex-col gap-4">
-      <!-- Cardholder Name -->
-      <div class="flex items-center gap-4">
-        <label for="cardholder" class="font-semibold w-24">Cardholder</label>
-        <InputText
-          id="cardholder"
-          class="flex-auto"
-          v-model="cardDetails.Name"
-          placeholder="Name on Card"
-          autocomplete="off"
-        />
+    <template #container>
+      <div class="p-4 pb-0">
+        <Button
+          class="!float-left !bg-inherit !border-none dark:!text-white !border-transparent"
+          size="large"
+          @click="openAddCard = false"
+        >
+          <template #icon>
+            <i class="pi pi-arrow-left" style="font-size: 1.2rem" />
+          </template>
+        </Button>
       </div>
+      <div class="flex flex-col gap-4 p-4 grow" v-focustrap>
+        <h3
+          class="w-full text-left font-black text-3xl"
+          style="font-family: system-ui"
+        >
+          Card in your name
+        </h3>
+        <div class="flex items-center gap-2">
+          <BiShieldQuarter
+            color="#697bfe"
+            size="15"
+            style="transform: scaleX(-1)"
+          /><span>Processed securely by PCIDSS</span>
+        </div>
+        <!-- Cardholder Name -->
+        <div class="flex items-center gap-4 bg-neutral-950 rounded-2xl">
+          <IftaLabel
+            fluid
+            style="width: 100%"
+            :dt="{ color: 'grey', focus: { color: 'grey' } }"
+          >
+            <IconField>
+              <InputIcon>
+                <i class="pi pi-credit-card" />
+              </InputIcon>
+              <InputText
+                autofocus
+                class="!border-none"
+                name="cardNumber"
+                placeholder="0000 0000 0000 0000"
+                v-model="cardDetails.CardNumber"
+                fluid
+              />
+            </IconField>
+            <label for="username" class="text-blue">Card number</label>
+          </IftaLabel>
+          <i class="pi pi-camera mr-3" />
+        </div>
 
-      <!-- Bank Name -->
-      <div class="flex items-center gap-4">
-        <label for="bankname" class="font-semibold w-24">Bank Name</label>
-        <InputText
-          id="bankname"
-          class="flex-auto"
-          v-model="cardDetails.BankName"
-          placeholder="Name of the bank"
-          autocomplete="off"
-        />
+        <!-- Expiration Date and CVV -->
+        <div class="flex gap-4">
+          <div class="flex items-center gap-4 flex-1">
+            <IftaLabel
+              class="!border-none"
+              :dt="{ color: 'grey', focus: { color: 'grey' } }"
+            >
+              <label for="expiryDate" class="font-semibold w-24">Expiry</label>
+              <InputMask
+                name="expiryDate"
+                mask="99/99"
+                placeholder="MM/YY"
+                fluid
+                id="expiryDate"
+                v-model="cardDetails.ExpiryDay"
+                class="!border-none"
+              />
+            </IftaLabel>
+          </div>
+          <div class="flex items-center gap-4 flex-1">
+            <IftaLabel
+              class="!border-none"
+              :dt="{ color: 'grey', focus: { color: 'grey' } }"
+            >
+              <label for="cvv" class="font-semibold w-24">CVV</label>
+              <InputMask
+                name="cvv"
+                mask="999"
+                placeholder="3 digits"
+                fluid
+                id="expiryDate"
+                v-model="cardDetails.CVV"
+                class="!border-none"
+              />
+            </IftaLabel>
+          </div>
+        </div>
       </div>
-      <!-- Card Number -->
-      <div class="flex items-center gap-4">
-        <label for="cardNumber" class="font-semibold w-24">Card Number</label>
-        <InputMask
-          name="cardNumber"
-          mask="9999 9999 9999 9999"
-          placeholder="1234 5678 1234 5978"
-          v-model="cardDetails.CardNumber"
-          fluid
-        />
-      </div>
-
-      <!--card type-->
-      <Select
-        v-model="cardDetails.Type"
-        :options="cardTypes"
-        filter
-        optionLabel="name"
-        placeholder="Select a Country"
-        class="w-full md:w-56"
+      <!-- Actions -->
+      <div
+        class="flex flex-col justify-center items-centergap-2 mt-4 w-full p-4"
       >
-        <template #value="slotProps">
-          <div v-if="slotProps.value" class="flex items-center">
-            <img
-              :alt="slotProps.value"
-              :src="`${slotProps.value.toLowerCase()}.png`"
-              :class="`mr-2`"
-              style="width: 18px"
-            />
-            <div>{{ slotProps.value }}</div>
-          </div>
-          <span v-else>
-            {{ slotProps.placeholder }}
-          </span>
-        </template>
-        <template #option="slotProps">
-          <div class="flex items-center">
-            <img
-              :alt="slotProps.option"
-              :src="`${slotProps.option.toLowerCase()}.png`"
-              :class="`mr-2`"
-              style="width: 18px"
-            />
-            <div>{{ slotProps.option }}</div>
-          </div>
-        </template>
-      </Select>
-
-      <!-- Expiration Date and CVV -->
-      <div class="flex gap-4">
-        <div class="flex items-center gap-4 flex-1">
-          <label for="expiryDate" class="font-semibold w-24">Expiry</label>
-          <InputMask
-            name="expiryDate"
-            mask="99/99"
-            placeholder="XX/XX"
-            fluid
-            id="expiryDate"
-            v-model="cardDetails.ExpiryDay"
-          />
-        </div>
-        <div class="flex items-center gap-4 flex-1">
-          <label for="cvv" class="font-semibold w-24">CVV</label>
-          <InputMask
-            name="cvv"
-            mask="999"
-            placeholder="XXX"
-            fluid
-            id="expiryDate"
-            v-model="cardDetails.CVV"
-          />
-        </div>
+        <p class="text-center text-sky-500">
+          We will save your card for future payments
+        </p>
+        <Button
+          type="button"
+          label="Continue"
+          @click="saveCardDetails"
+          class="!rounded-3xl !bg-sky-500 !border-none"
+        ></Button>
       </div>
-    </div>
-    <!-- Actions -->
-    <div class="flex justify-end gap-2 mt-4">
-      <Button
-        type="button"
-        label="Cancel"
-        severity="secondary"
-        @click="openAddCard = false"
-      ></Button>
-      <Button type="button" label="Save" @click="saveCardDetails"></Button>
-    </div>
-  </Dialog>
+    </template>
+  </Drawer>
 </template>
 
 <script setup lang="ts">
@@ -642,7 +659,6 @@ watch(isScrolling, (_newScrolling, _oldScrolling) => {
   }
 });
 
-
 function saveCardDetails() {
   console.log("Card Details:", cardDetails.value);
   openAddCard.value = false;
@@ -660,7 +676,7 @@ const cardDetails = ref({
   ShowCVV: false,
   BankName: "",
 });
-const cardTypes = ref(["Visa", "MasterCard", "Google", "Apple"]);
+//const cardTypes = ref(["Visa", "MasterCard", "Google", "Apple"]);
 const openAddCard = ref(false);
 const modules = ref([Pagination]);
 const cardStore = useCardStore();
@@ -668,13 +684,23 @@ const accountStore = useAccountStore();
 const transactionStore = useTransactionStore();
 const openAddMoney = ref(false);
 const openChangeCard = ref(false);
-const addValue = ref(10);
+const addValue = ref(0);
+
+watch(openAddMoney, (newValue) => {
+  if (newValue) {
+    // Focus the input element when openAddCard becomes true
+    //addCardInput.value?.focus();
+    let ele = document.getElementById("addvalue");
+    console.log(ele);
+  }
+});
+
 const selectedAccount = ref(
   accountStore.defaultAccounts[accountStore.activeAccountIndex]
 );
 const selectedCard = ref(cardStore.cards[0]);
-const onSwiper = (swiper: any) => {
-  console.log(swiper);
+const onSwiper = (_swiper: any) => {
+  //console.log(swiper);
 };
 const onSlideChange = (e: any) => {
   //console.log("slide change", e.activeIndex);
@@ -685,13 +711,13 @@ const onSlideChange = (e: any) => {
 function saveAddMoney() {
   console.log("Account Details:", selectedAccount);
   console.log(addValue.value);
-
+  openAddMoney.value = false;
   // Set processing to true
   processing.value = true;
   // Simulate processing delay of 5 seconds
   setTimeout(() => {
     processing.value = false; // Reset processing after 5 seconds
-    openAddMoney.value = false;
+
     accountStore.updateAccount(
       selectedAccount.value.ID,
       addValue.value,
@@ -708,7 +734,7 @@ function formatTransactiontext(ts: Transaction) {
     case "Credit":
       return `You have received ${ts.Amount} ${ts.Currency} from ${ts.MerchantOrSource}`;
     case "Add":
-      return `Money Added via ****${ts.CardNumber.slice(-4)}`;
+    return `Money Added via ··${ts.CardNumber.slice(-4)}`;
   }
 }
 
@@ -744,11 +770,11 @@ function formatRelativeTime(date: Date): string {
   }
 }
 
-const selectDT = ref({
+/*const selectDT = ref({
   dropdown: {
     width: "100px",
   },
-});
+});*/
 
 const dataViewDT = ref({
   content: {
@@ -789,5 +815,53 @@ const dataViewDT = ref({
   background-color: transparent;
   padding: 10px;
   float: right;
+}
+</style>
+<style>
+.outer,
+.inner {
+  background: #eee;
+  padding: 30px;
+  min-height: 100px;
+}
+
+.inner {
+  background: #ccc;
+}
+
+.nested-enter-active,
+.nested-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+/* delay leave of parent element */
+.nested-leave-active {
+  transition-delay: 0.25s;
+}
+
+.nested-enter-from,
+.nested-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+/* we can also transition nested elements using nested selectors */
+.nested-enter-active .inner,
+.nested-leave-active .inner {
+  transition: all 0.3s ease-in-out;
+}
+/* delay enter of nested element */
+.nested-enter-active .inner {
+  transition-delay: 0.25s;
+}
+
+.nested-enter-from .inner,
+.nested-leave-to .inner {
+  transform: translateX(30px);
+  /*
+  	Hack around a Chrome 96 bug in handling nested opacity transitions.
+    This is not needed in other browsers or Chrome 99+ where the bug
+    has been fixed.
+  */
+  opacity: 0.001;
 }
 </style>

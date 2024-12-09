@@ -1,5 +1,6 @@
 import { createRouter, RouteRecordRaw, createWebHistory } from "vue-router";
-
+import AOS from "aos";
+import 'aos/dist/aos.css';
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((_to, _from, next) => {
+  AOS.init(); // Initialize AOS
+  next();
 });
 
 export default router;

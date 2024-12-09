@@ -17,3 +17,4 @@ declare module "@app/store" {
 }
 
 declare module 'process';
+declare module 'aos';

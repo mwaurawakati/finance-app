@@ -21,6 +21,8 @@ fn safe_area_color(name: &str, app_handle: AppHandle) -> String {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_status_bar_color::init())
         .plugin(tauri_plugin_shell::init())
@@ -31,7 +33,7 @@ pub fn run() {
                 let hide_app = MenuItem::with_id(app, "hide_app", "Hide", true, None::<&str>)?;
                 let show_app = MenuItem::with_id(app, "show_app", "Show", true, None::<&str>)?;
                 let quit = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
-                let menu = Menu::with_items(app, &[&hide_app, &show_app,&quit])?;
+                let menu = Menu::with_items(app, &[&hide_app, &show_app, &quit])?;
                 let _ = TrayIconBuilder::new()
                     .icon(app.default_window_icon().unwrap().clone())
                     .menu(&menu)
